@@ -1,8 +1,12 @@
 package com.jahid.ecommerce.api.user;
 
 import com.jahid.ecommerce.api.cart.Cart;
+import com.jahid.ecommerce.api.order.Order;
+import com.jahid.ecommerce.api.order_item.OrderItem;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.Set;
 
 enum UserRole{
     CUSTOMER,
@@ -30,7 +34,7 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "isActive", nullable = false, columnDefinition = "boolean default true")
+    @Column(name = "is_active", nullable = false, columnDefinition = "boolean default true")
     private boolean isActive;
 
     @Column(name = "email")
@@ -46,4 +50,7 @@ public class User {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "cart_id", referencedColumnName = "cart_id")
     private Cart cart;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Order> orderSet;
 }

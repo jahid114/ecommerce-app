@@ -1,5 +1,6 @@
 package com.jahid.ecommerce.api.order_status;
 
+import com.jahid.ecommerce.api.order.Order;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,4 +36,7 @@ public class OrderStatus {
     @Column(name = "delivery_datetime")
     @Temporal(TemporalType.TIMESTAMP)
     private Date deliveryDateTime;
+
+    @OneToOne(mappedBy = "orderStatus")
+    private Order order;
 }
