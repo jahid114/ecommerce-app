@@ -1,5 +1,6 @@
 package com.jahid.ecommerce.api.order_item;
 
+import com.jahid.ecommerce.api.cart.Cart;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,4 +24,8 @@ public class OrderItem {
 
     @Column(name = "order_quantity", nullable = false)
     private int orderQuantity;
+
+    @ManyToOne()
+    @JoinColumn(name = "cart_id", referencedColumnName = "cart_id")
+    private Cart cart;
 }

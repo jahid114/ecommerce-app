@@ -1,5 +1,6 @@
 package com.jahid.ecommerce.api.user;
 
+import com.jahid.ecommerce.api.cart.Cart;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,7 +19,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id", nullable = false)
-    private Long id;
+    private Long userId;
 
     @Column(name = "user_name", nullable = false)
     private String name;
@@ -41,4 +42,8 @@ public class User {
     @Column(name = "role", columnDefinition = "VARCHAR(255) DEFAULT 'CUSTOMER'")
     @Enumerated(EnumType.STRING)
     private UserRole userRole = UserRole.CUSTOMER;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JoinColumn(name = "cart_id", referencedColumnName = "cart_id")
+    private Cart cart;
 }
