@@ -1,6 +1,5 @@
 package com.jahid.ecommerce.api.product;
 
-import com.fasterxml.jackson.databind.annotation.EnumNaming;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
