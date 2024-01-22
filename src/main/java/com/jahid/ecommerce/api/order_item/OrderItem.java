@@ -1,6 +1,7 @@
 package com.jahid.ecommerce.api.order_item;
 
 import com.jahid.ecommerce.api.cart.Cart;
+import com.jahid.ecommerce.api.product.Product;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,4 +29,12 @@ public class OrderItem {
     @ManyToOne()
     @JoinColumn(name = "cart_id", referencedColumnName = "cart_id")
     private Cart cart;
+
+    @ManyToOne()
+    @JoinColumn(name = "product_id", referencedColumnName = "product_id")
+    private Product product;
+
+//    @ManyToOne()
+//    @JoinColumn(name = "product_id", referencedColumnName = "product_id")
+//    private Product product;
 }
