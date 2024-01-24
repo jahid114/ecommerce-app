@@ -1,6 +1,5 @@
 package com.jahid.ecommerce.api.order;
 
-import com.jahid.ecommerce.api.cart.Cart;
 import com.jahid.ecommerce.api.order_item.OrderItem;
 import com.jahid.ecommerce.api.order_status.OrderStatus;
 import com.jahid.ecommerce.api.user.User;
