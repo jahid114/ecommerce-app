@@ -5,4 +5,12 @@ public class EnumConstants {
         CUSTOMER,
         ADD
     }
+
+    public static enum Category{
+        UNKNOWN,
+        SMARTPHONE,
+        ELECTRONICS,
+        MOBILE_ACCESSORIES,
+        COMPUTER_ACCESSORIES
+    }
 }

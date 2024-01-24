@@ -1,6 +1,7 @@
 package com.jahid.ecommerce.api.product;
 
 import com.jahid.ecommerce.api.order_item.OrderItem;
+import com.jahid.ecommerce.api.utility.EnumConstants;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,13 +10,7 @@ import lombok.Setter;
 
 import java.util.Set;
 
-enum Category{
-    UNKNOWN,
-    SMARTPHONE,
-    ELECTRONICS,
-    MOBILE_ACCESSORIES,
-    COMPUTER_ACCESSORIES
-}
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -48,7 +43,7 @@ public class Product {
 
     @Column(name = "product_category",columnDefinition = ("varchar(255) default 'UNKNOWN'"))
     @Enumerated(EnumType.STRING)
-    private Category productCategory;
+    private EnumConstants.Category productCategory = EnumConstants.Category.UNKNOWN;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Set<OrderItem> orderItemSet;
