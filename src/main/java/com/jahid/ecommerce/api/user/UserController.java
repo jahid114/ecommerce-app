@@ -21,6 +21,12 @@ public class UserController {
         return new ResponseEntity<UserDto>(createdUser,HttpStatus.CREATED);
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<Void> login(@RequestBody UserDto userDto){
+        this.userService.login(userDto);
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping
     public ResponseEntity<List<UserDto>> getAllUser(){
         return new ResponseEntity<>(this.userService.getAllUser(),HttpStatus.OK);

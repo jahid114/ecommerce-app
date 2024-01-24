@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 
 @Service
 public class UserService {
@@ -25,6 +25,12 @@ public class UserService {
         if(!user.isActive()) user.setActive(true);
         User createdUser = this.userRepository.save(user);
         return this.modelMapper.map(createdUser,UserDto.class);
+    }
+
+    public void login(UserDto userDto){
+        User existedUser = this.userRepository.findByMobileNo(userDto.getMobileNo());
+        if(existedUser == null) throw new UserNotFoundException();
+        if(!Objects.equals(existedUser.getPassword(), userDto.getPassword())) throw new PasswordNotMatchException();
     }
 
     public List<UserDto> getAllUser(){
