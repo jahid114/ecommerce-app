@@ -37,7 +37,7 @@ public class UserService {
     }
 
     public UserDto getUserByID(Long id){
-        Optional<User> user = this.userRepository.findById(id);
+        User user = this.userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
         return this.modelMapper.map(user, UserDto.class);
     }
 
@@ -58,19 +58,3 @@ public class UserService {
     }
 }
 
-class UserNotFoundException extends RuntimeException
-{
-
-    private Long userId;
-
-    public
-
-    UserNotFoundException(Long userId) {
-        super("User not found with ID: " + userId);
-        this.userId = userId;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-}

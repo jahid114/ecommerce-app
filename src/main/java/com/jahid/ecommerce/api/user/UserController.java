@@ -1,6 +1,5 @@
 package com.jahid.ecommerce.api.user;
 
-import com.jahid.ecommerce.api.utility.ApiErrorResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
