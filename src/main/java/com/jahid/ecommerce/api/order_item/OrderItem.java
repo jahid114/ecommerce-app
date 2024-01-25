@@ -19,7 +19,7 @@ public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "order_item_id", nullable = false)
-    private Long order_item_id;
+    private Long orderItemId;
 
     @Column(name = "unit_price", nullable = false)
     private int unitPrice;
@@ -32,7 +32,7 @@ public class OrderItem {
     private Cart cart;
 
     @ManyToOne()
-    @JoinColumn(name = "product_id", referencedColumnName = "product_id")
+    @JoinColumn(name = "product_id", referencedColumnName = "product_id", nullable = false)
     private Product product;
 
     @ManyToOne()

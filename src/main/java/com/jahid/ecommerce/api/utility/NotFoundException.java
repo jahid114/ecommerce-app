@@ -10,12 +10,12 @@ import lombok.Setter;
 public class NotFoundException extends RuntimeException
 {
 
-    private Long userId;
+    private Long Id;
     private String className;
 
-    public NotFoundException(Long userId, String className) {
-        super(className+ " not found with ID: " + userId);
-        this.userId = userId;
+    public NotFoundException(Long Id, String className) {
+        super(className+ " not found with ID: " + Id);
+        this.Id = Id;
         this.className = className;
     }
 

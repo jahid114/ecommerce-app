@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 public class ProductDto implements Serializable {
-    private Long product_id;
+    private Long productId;
     private String productName;
     private String productDetails;
     private int price;
