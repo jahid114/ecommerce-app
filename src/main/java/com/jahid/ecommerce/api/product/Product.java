@@ -1,5 +1,6 @@
 package com.jahid.ecommerce.api.product;
 
+import com.jahid.ecommerce.api.cart_item.CartItem;
 import com.jahid.ecommerce.api.order_item.OrderItem;
 import com.jahid.ecommerce.api.utility.EnumConstants;
 import jakarta.persistence.*;
@@ -48,4 +49,9 @@ public class Product {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Set<OrderItem> orderItemSet;
+
+    // Todo: Need to change Cascade type to prevent deleting cartItem and orderItem
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private Set<CartItem> cartItemSet;
 }
