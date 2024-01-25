@@ -23,9 +23,10 @@ public class Product {
     @Column(name = "product_id", nullable = false)
     private Long product_id;
 
-    @Column(name = "product_name", nullable = false)
+    @Column(name = "product_name", nullable = false, unique = true)
     private String productName;
 
+    @Lob
     @Column(name = "product_details")
     private String productDetails;
 
@@ -41,7 +42,7 @@ public class Product {
     @Column(name = "sku", nullable = false)
     private String sku;
 
-    @Column(name = "product_category",columnDefinition = ("varchar(255) default 'UNKNOWN'"))
+    @Column(name = "product_category",columnDefinition = ("varchar(255) default 'UNKNOWN'"),nullable = false)
     @Enumerated(EnumType.STRING)
     private EnumConstants.Category productCategory = EnumConstants.Category.UNKNOWN;
 
