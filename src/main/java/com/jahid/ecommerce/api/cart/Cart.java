@@ -28,7 +28,7 @@ public class Cart {
     @Column(name = "total_quantity")
     private int totalQuantity;
 
-    @OneToOne(mappedBy = "cart")
+    @OneToOne(mappedBy = "cart",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private User user;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
