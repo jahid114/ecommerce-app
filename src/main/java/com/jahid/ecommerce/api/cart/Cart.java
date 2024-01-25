@@ -28,9 +28,11 @@ public class Cart {
     @Column(name = "total_quantity")
     private int totalQuantity;
 
-    @OneToOne(mappedBy = "cart",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST},fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
     private Set<OrderItem> orderItemSet;
+
 }

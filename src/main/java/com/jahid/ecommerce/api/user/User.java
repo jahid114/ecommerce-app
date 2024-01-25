@@ -43,8 +43,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private EnumConstants.UserRole userRole = EnumConstants.UserRole.CUSTOMER;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    @JoinColumn(name = "cart_id", referencedColumnName = "cart_id")
+    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
     private Cart cart;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
