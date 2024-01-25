@@ -1,6 +1,7 @@
 package com.jahid.ecommerce.api.user;
 
 import com.jahid.ecommerce.api.utility.EnumConstants;
+import com.jahid.ecommerce.api.utility.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ public class UserService {
 
     public void login(UserDto userDto){
         User existedUser = this.userRepository.findByMobileNo(userDto.getMobileNo());
-        if(existedUser == null) throw new UserNotFoundException();
+        if(existedUser == null) throw new NotFoundException();
         if(!Objects.equals(existedUser.getPassword(), userDto.getPassword())) throw new PasswordNotMatchException();
     }
 
@@ -43,13 +44,13 @@ public class UserService {
     }
 
     public UserDto getUserByID(Long id){
-        User user = this.userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+        User user = this.userRepository.findById(id).orElseThrow(() -> new NotFoundException(id, User.class.getSimpleName()));
         return this.modelMapper.map(user, UserDto.class);
     }
 
     public UserDto updateUserNameEmailAndAddress(Long id, UserDto userDto){
         User existedUser = this.userRepository.findById(id)
-                .orElseThrow(()->new UserNotFoundException(id));
+                .orElseThrow(()->new NotFoundException(id, User.class.getSimpleName()));
         if(userDto.getEmail() != null) existedUser.setEmail(userDto.getEmail());
         if(userDto.getAddress() != null)existedUser.setAddress(userDto.getAddress());
         if(userDto.getName() != null)existedUser.setName(userDto.getName());
@@ -59,7 +60,7 @@ public class UserService {
 
     public void deleteUser(Long id){
         User existedUser = this.userRepository.findById(id)
-                .orElseThrow(()->new UserNotFoundException(id));
+                .orElseThrow(()->new NotFoundException(id,User.class.getSimpleName()));
         this.userRepository.deleteById(id);
     }
 }
