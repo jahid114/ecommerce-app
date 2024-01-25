@@ -1,5 +1,6 @@
 package com.jahid.ecommerce.api.cart;
 
+import com.jahid.ecommerce.api.order_item.CartItem;
 import com.jahid.ecommerce.api.order_item.OrderItem;
 import com.jahid.ecommerce.api.user.User;
 import jakarta.persistence.*;
@@ -33,6 +34,6 @@ public class Cart {
     private User user;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
-    private Set<OrderItem> orderItemSet;
+    private Set<CartItem> cartItemSet;
 
 }

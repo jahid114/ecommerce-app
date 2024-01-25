@@ -24,12 +24,12 @@ public class OrderItem {
     @Column(name = "unit_price", nullable = false)
     private int unitPrice;
 
-    @Column(name = "order_quantity", nullable = false)
-    private int orderQuantity;
+    @Column(name = "total_price", nullable = false)
+    private Long totalPrice;
 
-    @ManyToOne()
-    @JoinColumn(name = "cart_id", referencedColumnName = "cart_id")
-    private Cart cart;
+    @Column(name = "item_quantity", nullable = false)
+    private int itemQuantity;
+
 
     @ManyToOne()
     @JoinColumn(name = "product_id", referencedColumnName = "product_id", nullable = false)
