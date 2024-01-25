@@ -16,9 +16,9 @@ public class UserController {
         this.userService = userService;
     }
     @PostMapping()
-    public ResponseEntity<UserDto> registerUser(@RequestBody UserDto user){
-        UserDto createdUser = userService.registerUser(user);
-        return new ResponseEntity<UserDto>(createdUser,HttpStatus.CREATED);
+    public ResponseEntity<UserResponseDto> registerUser(@RequestBody UserDto user){
+        UserResponseDto createdUser = userService.registerUser(user);
+        return new ResponseEntity<UserResponseDto>(createdUser,HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
@@ -28,19 +28,19 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserDto>> getAllUser(){
+    public ResponseEntity<List<UserResponseDto>> getAllUser(){
         return new ResponseEntity<>(this.userService.getAllUser(),HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable String id){
-        UserDto user = this.userService.getUserByID(Long.parseLong(id));
+    public ResponseEntity<UserResponseDto> getUserById(@PathVariable String id){
+        UserResponseDto user = this.userService.getUserByID(Long.parseLong(id));
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<UserDto> updateUserNameEmailAndAddress(@PathVariable String id, @RequestBody UserDto user){
-        UserDto updatedUser = this.userService.updateUserNameEmailAndAddress(Long.parseLong(id),user);
+    public ResponseEntity<UserResponseDto> updateUserNameEmailAndAddress(@PathVariable String id, @RequestBody UserDto user){
+        UserResponseDto updatedUser = this.userService.updateUserNameEmailAndAddress(Long.parseLong(id),user);
         return ResponseEntity.ok(updatedUser);
     }
 
@@ -49,6 +49,4 @@ public class UserController {
         this.userService.deleteUser(Long.parseLong(id));
         return ResponseEntity.noContent().build();
     }
-
-
 }

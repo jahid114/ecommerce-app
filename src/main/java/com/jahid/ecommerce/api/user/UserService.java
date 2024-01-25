@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -20,12 +21,12 @@ public class UserService {
         this.modelMapper = modelMapper;
     }
 
-    public UserDto registerUser(UserDto userDto){
+    public UserResponseDto registerUser(UserDto userDto){
         User user = this.modelMapper.map(userDto, User.class);
         if(user.getUserRole() == null) user.setUserRole(EnumConstants.UserRole.CUSTOMER);
         if(!user.isActive()) user.setActive(true);
         User createdUser = this.userRepository.save(user);
-        return this.modelMapper.map(createdUser,UserDto.class);
+        return this.modelMapper.map(createdUser,UserResponseDto.class);
     }
 
     public void login(UserDto userDto){
@@ -34,28 +35,25 @@ public class UserService {
         if(!Objects.equals(existedUser.getPassword(), userDto.getPassword())) throw new PasswordNotMatchException();
     }
 
-    public List<UserDto> getAllUser(){
+    public List<UserResponseDto> getAllUser(){
         List<User> users = this.userRepository.findAll();
-        List<UserDto> allUsers = new ArrayList<>();
-        for(User user: users){
-            allUsers.add(this.modelMapper.map(user,UserDto.class));
-        }
+        List<UserResponseDto> allUsers = users.stream().map(user -> modelMapper.map(user, UserResponseDto.class)).collect(Collectors.toList());
         return allUsers;
     }
 
-    public UserDto getUserByID(Long id){
+    public UserResponseDto getUserByID(Long id){
         User user = this.userRepository.findById(id).orElseThrow(() -> new NotFoundException(id, User.class.getSimpleName()));
-        return this.modelMapper.map(user, UserDto.class);
+        return this.modelMapper.map(user, UserResponseDto.class);
     }
 
-    public UserDto updateUserNameEmailAndAddress(Long id, UserDto userDto){
+    public UserResponseDto updateUserNameEmailAndAddress(Long id, UserDto userDto){
         User existedUser = this.userRepository.findById(id)
                 .orElseThrow(()->new NotFoundException(id, User.class.getSimpleName()));
         if(userDto.getEmail() != null) existedUser.setEmail(userDto.getEmail());
         if(userDto.getAddress() != null)existedUser.setAddress(userDto.getAddress());
         if(userDto.getName() != null)existedUser.setName(userDto.getName());
         User updatedUser = this.userRepository.save(existedUser);
-        return this.modelMapper.map(updatedUser,UserDto.class);
+        return this.modelMapper.map(updatedUser,UserResponseDto.class);
     }
 
     public void deleteUser(Long id){
