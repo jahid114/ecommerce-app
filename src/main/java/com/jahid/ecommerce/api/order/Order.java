@@ -32,7 +32,7 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<OrderItem> orderItemSet;
 
-    @ManyToOne(optional = false)
+    @ManyToOne()
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
 
