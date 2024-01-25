@@ -1,4 +1,4 @@
-package com.jahid.ecommerce.api.order_item;
+package com.jahid.ecommerce.api.cart_item;
 
 import com.jahid.ecommerce.api.cart.Cart;
 import com.jahid.ecommerce.api.order.Order;

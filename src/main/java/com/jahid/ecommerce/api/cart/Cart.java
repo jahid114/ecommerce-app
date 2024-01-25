@@ -1,7 +1,6 @@
 package com.jahid.ecommerce.api.cart;
 
-import com.jahid.ecommerce.api.order_item.CartItem;
-import com.jahid.ecommerce.api.order_item.OrderItem;
+import com.jahid.ecommerce.api.cart_item.CartItem;
 import com.jahid.ecommerce.api.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

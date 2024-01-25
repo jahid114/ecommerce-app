@@ -7,7 +7,7 @@ import lombok.Setter;
 import java.io.Serializable;
 
 /**
- * DTO for {@link com.jahid.ecommerce.api.order_item.CartItem}
+ * DTO for {@link com.jahid.ecommerce.api.cart_item.CartItem}
  */
 @NoArgsConstructor
 @Getter
