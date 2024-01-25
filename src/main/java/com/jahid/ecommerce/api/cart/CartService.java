@@ -27,6 +27,8 @@ public class CartService {
     public CartResponseDto createCart(CreateCartDto createCartDto){
         User user = this.userRepository.findById(createCartDto.getUserId()).orElseThrow(() -> new NotFoundException(createCartDto.getUserId(), User.class.getSimpleName()));
         Cart cart = this.modelMapper.map(createCartDto, Cart.class);
+        cart.setTotalPrice(0L);
+        user.setCart(cart);
         cart.setUser(user);
         cart.setTotalPrice(0L);
         Cart createdCart = this.cartRepository.save(cart);
