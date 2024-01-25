@@ -30,7 +30,6 @@ public class OrderItem {
     @Column(name = "item_quantity", nullable = false)
     private int itemQuantity;
 
-
     @ManyToOne()
     @JoinColumn(name = "product_id", referencedColumnName = "product_id", nullable = false)
     private Product product;
