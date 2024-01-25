@@ -30,10 +30,7 @@ public class CartService {
         cart.setTotalPrice(0L);
         user.setCart(cart);
         cart.setUser(user);
-        cart.setTotalPrice(0L);
         Cart createdCart = this.cartRepository.save(cart);
-        user.setCart(cart);
-        userRepository.save(user);
         return this.modelMapper.map(createdCart, CartResponseDto.class);
     }
 
@@ -42,4 +39,15 @@ public class CartService {
         List<CartResponseDto> cartResponseDtos = carts.stream().map(cart -> modelMapper.map(cart, CartResponseDto.class)).collect(Collectors.toList());
         return cartResponseDtos;
     }
+
+    public CartResponseDto getCartByID(long cartId) {
+        Cart cart = cartRepository.findById(cartId).orElseThrow(()-> new NotFoundException(cartId,Cart.class.getSimpleName()));
+        return modelMapper.map(cart, CartResponseDto.class);
+    }
+
+    public void deleteCart(Long cartId){
+        Cart existedCart = cartRepository.findById(cartId).orElseThrow(()-> new NotFoundException(cartId,Cart.class.getSimpleName()));
+        cartRepository.deleteById(cartId);
+    }
+
 }

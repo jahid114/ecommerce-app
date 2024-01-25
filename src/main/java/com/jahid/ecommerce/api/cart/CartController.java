@@ -28,4 +28,16 @@ public class CartController {
         List<CartResponseDto> cartResponseDtos = cartService.getAllCart();
         return ResponseEntity.ok(cartResponseDtos);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CartResponseDto> getCartById(@PathVariable String id){
+        CartResponseDto cart = cartService.getCartByID(Long.parseLong(id));
+        return ResponseEntity.ok(cart);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCart(@PathVariable String id){
+        cartService.deleteCart(Long.parseLong(id));
+        return ResponseEntity.noContent().build();
+    }
 }
