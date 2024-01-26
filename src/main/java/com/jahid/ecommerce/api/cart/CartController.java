@@ -3,7 +3,6 @@ package com.jahid.ecommerce.api.cart;
 import com.jahid.ecommerce.api.cart_item.RequestCartItemDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,8 +29,8 @@ public class CartController {
     }
     @GetMapping
     public ResponseEntity<List<CartResponseDto>> getAllCart(){
-        List<CartResponseDto> cartResponseDtos = cartService.getAllCart();
-        return ResponseEntity.ok(cartResponseDtos);
+        List<CartResponseDto> cartResponseDto = cartService.getAllCart();
+        return ResponseEntity.ok(cartResponseDto);
     }
 
     @GetMapping("/{id}")
