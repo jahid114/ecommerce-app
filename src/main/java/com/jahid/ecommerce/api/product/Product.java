@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Set;
 
 
@@ -48,10 +49,8 @@ public class Product {
     private EnumConstants.Category productCategory = EnumConstants.Category.UNKNOWN;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private Set<OrderItem> orderItemSet;
-
-    // Todo: Need to change Cascade type to prevent deleting cartItem and orderItem
+    private List<OrderItem> orderItems;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private Set<CartItem> cartItemSet;
+    private List<CartItem> cartItems;
 }

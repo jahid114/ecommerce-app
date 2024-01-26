@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Set;
+import java.util.List;
 
 @Getter
 @Setter
@@ -30,7 +30,7 @@ public class Order {
     private int totalQuantity;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<OrderItem> orderItemSet;
+    private List<OrderItem> orderItems;
 
     @ManyToOne()
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")

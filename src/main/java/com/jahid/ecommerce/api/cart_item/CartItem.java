@@ -30,7 +30,7 @@ public class CartItem {
     private int itemQuantity;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinColumn(name = "cart_id", referencedColumnName = "cart_id", nullable = false)
+    @JoinColumn(name = "cart_id", nullable = false)
     private Cart cart;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
