@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 
@@ -20,7 +21,7 @@ public class CartResponseDto implements Serializable {
     private Long totalPrice;
     private int totalQuantity;
     private UserDto user;
-    private Set<ResponseCartItemDto> cartItemSet;
+    private List<ResponseCartItemDto> cartItems;
 
 
     @NoArgsConstructor
