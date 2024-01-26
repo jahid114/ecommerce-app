@@ -2,12 +2,16 @@ package com.jahid.ecommerce.api.cart_item;
 
 import com.jahid.ecommerce.api.cart.Cart;
 import com.jahid.ecommerce.api.cart.CartRepository;
+import com.jahid.ecommerce.api.cart.CartResponseDto;
 import com.jahid.ecommerce.api.product.Product;
 import com.jahid.ecommerce.api.product.ProductRepository;
 import com.jahid.ecommerce.api.utility.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CartItemService {
@@ -24,17 +28,48 @@ public class CartItemService {
         this.cartRepository = cartRepository;
     }
 
-    public ResponseCartItemDto createCartItem(CreateCartItemDto createCartItemDto) {
-        Product product = productRepository.findById(createCartItemDto.getProductId()).orElseThrow(()->new NotFoundException(createCartItemDto.getProductId(),Product.class.getName()));
-        Cart cart = cartRepository.findById(createCartItemDto.getCartId()).orElseThrow(()->new NotFoundException(createCartItemDto.getCartId(),Cart.class.getSimpleName()));
-        CartItem cartItem = this.modelMapper.map(createCartItemDto, CartItem.class);
+    public CartResponseDto createCartItem(RequestCartItemDto requestCartItemDto) {
+        Product product = productRepository.findById(requestCartItemDto.getProductId()).orElseThrow(()->new NotFoundException(requestCartItemDto.getProductId(),Product.class.getName()));
+        Cart cart = cartRepository.findById(requestCartItemDto.getCartId()).orElseThrow(()->new NotFoundException(requestCartItemDto.getCartId(),Cart.class.getSimpleName()));
+        CartItem cartItem = this.modelMapper.map(requestCartItemDto, CartItem.class);
         cartItem.setUnitPrice(product.getPrice());
         cartItem.setTotalPrice(((long) product.getPrice() * cartItem.getItemQuantity()));
-//        cart.getCartItemSet().add(cartItem);
-//        product.getCartItemSet().add(cartItem);
         cartItem.setCart(cart);
         cartItem.setProduct(product);
-        CartItem createdItem = cartItemRepository.save(cartItem);
-        return modelMapper.map(createdItem, ResponseCartItemDto.class);
+        if(cart.getCartItems() == null){
+            List<CartItem> cartItems = new ArrayList<>();
+            cartItems.add(cartItem);
+            cart.setCartItems(cartItems);
+        }else {
+            cart.getCartItems().add(cartItem);
+        }
+        cart.setTotalQuantity(cart.getTotalQuantity()+cartItem.getItemQuantity());
+        cart.setTotalPrice(cart.getTotalPrice()+cartItem.getTotalPrice());
+        return modelMapper.map(cartRepository.save(cart), CartResponseDto.class);
+    }
+    // Todo fix quantity bug
+    public ResponseCartItemDto updateCartItem(Long Id,int quantity){
+        CartItem cartItem = cartItemRepository.findById(Id).orElseThrow(()->new NotFoundException(Id,CartItem.class.getSimpleName()));
+        Cart cart = cartRepository.findById(cartItem.getCart().getCartId()).orElseThrow(()->new NotFoundException(Id,Cart.class.getSimpleName()));
+        if(quantity>0){
+            cart.setTotalPrice(cart.getTotalPrice()-cartItem.getTotalPrice());
+            cart.setTotalQuantity(cart.getTotalQuantity()-cartItem.getItemQuantity());
+            cartItem.setItemQuantity(quantity);
+            cartItem.setTotalPrice(((long) quantity *cartItem.getUnitPrice()));
+            cart.setTotalQuantity(cart.getTotalQuantity()+quantity);
+            cart.setTotalPrice(cart.getTotalPrice()+cartItem.getTotalPrice());
+        }
+        CartItem updatedCartItem = cartItemRepository.save(cartItem);
+        cartRepository.save(cart);
+        return this.modelMapper.map(updatedCartItem, ResponseCartItemDto.class);
+    }
+
+    public void deleteCartItem(Long Id){
+        CartItem cartItem = cartItemRepository.findById(Id).orElseThrow(()->new NotFoundException(Id,CartItem.class.getSimpleName()));
+        Cart cart = cartRepository.findById(cartItem.getCart().getCartId()).orElseThrow(()->new NotFoundException(Id,Cart.class.getSimpleName()));
+        cart.setTotalPrice(cart.getTotalPrice()-cartItem.getTotalPrice());
+        cart.setTotalQuantity(cart.getTotalQuantity()-cartItem.getItemQuantity());
+        cartItemRepository.deleteById(Id);
+        cartRepository.save(cart);
     }
 }

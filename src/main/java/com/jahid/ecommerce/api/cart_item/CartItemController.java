@@ -1,14 +1,8 @@
 package com.jahid.ecommerce.api.cart_item;
 
-import com.jahid.ecommerce.api.cart.CreateCartDto;
-import com.jahid.ecommerce.api.product.Product;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/cartItems")
@@ -19,9 +13,16 @@ public class CartItemController {
         this.cartItemService = cartItemService;
     }
 
-    @PostMapping
-    public ResponseEntity<ResponseCartItemDto> createCartItem(@RequestBody CreateCartItemDto createCartItemDto){
-        ResponseCartItemDto cartItem = cartItemService.createCartItem(createCartItemDto);
-        return new ResponseEntity<>(cartItem, HttpStatus.CREATED);
+
+    @PatchMapping("/{cartItemId}")
+    public ResponseEntity<ResponseCartItemDto> updateCartItem(@PathVariable String cartItemId, @RequestBody RequestCartItemDto requestCartItemDto){
+        ResponseCartItemDto response = cartItemService.updateCartItem(Long.parseLong(cartItemId),requestCartItemDto.getItemQuantity());
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{cartItemId}")
+    public ResponseEntity<Void> deleteCartItem(@PathVariable String cartItemId){
+        cartItemService.deleteCartItem(Long.parseLong(cartItemId));
+        return ResponseEntity.noContent().build();
     }
 }
