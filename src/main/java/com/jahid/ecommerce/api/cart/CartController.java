@@ -1,5 +1,7 @@
 package com.jahid.ecommerce.api.cart;
 
+import com.jahid.ecommerce.api.cart_item.RequestCartItemDto;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,17 +14,20 @@ import java.util.List;
 public class CartController {
 
     private final CartService cartService;
+    private final ModelMapper modelMapper;
 
-    CartController(@Autowired CartService cartService){
+    CartController(@Autowired CartService cartService, ModelMapper modelMapper){
         this.cartService = cartService;
+        this.modelMapper = modelMapper;
     }
 
-    @PostMapping
-    public ResponseEntity<CartResponseDto> createCart(@RequestBody CreateCartDto createCartDto){
-        CartResponseDto createdCart = this.cartService.createCart(createCartDto);
-        return new ResponseEntity<>(createdCart, HttpStatus.CREATED);
+    @PostMapping("/addToCart")
+    public ResponseEntity<CartResponseDto> addToCart(@RequestBody AddToCartRequestDto addToCartRequestDto){
+        System.out.println(addToCartRequestDto.getUserId());
+        RequestCartItemDto requestCartItemDto = modelMapper.map(addToCartRequestDto, RequestCartItemDto.class);
+        CartResponseDto response = cartService.addToCart(requestCartItemDto,addToCartRequestDto.getUserId());
+        return ResponseEntity.ok(response);
     }
-
     @GetMapping
     public ResponseEntity<List<CartResponseDto>> getAllCart(){
         List<CartResponseDto> cartResponseDtos = cartService.getAllCart();

@@ -1,5 +1,7 @@
 package com.jahid.ecommerce.api.cart;
 
+import com.jahid.ecommerce.api.cart_item.CartItemService;
+import com.jahid.ecommerce.api.cart_item.RequestCartItemDto;
 import com.jahid.ecommerce.api.user.User;
 import com.jahid.ecommerce.api.user.UserRepository;
 import com.jahid.ecommerce.api.utility.NotFoundException;
@@ -13,31 +15,43 @@ import java.util.stream.Collectors;
 @Service
 public class CartService {
     private final CartRepository cartRepository;
+    private final CartItemService cartItemService;
     private final ModelMapper modelMapper;
 
     private final UserRepository userRepository;
 
 
-    CartService(@Autowired CartRepository cartRepository, @Autowired ModelMapper modelMapper, @Autowired UserRepository userRepository){
+    CartService(@Autowired CartRepository cartRepository, CartItemService cartItemService, @Autowired ModelMapper modelMapper, @Autowired UserRepository userRepository){
         this.cartRepository = cartRepository;
+        this.cartItemService = cartItemService;
         this.modelMapper = modelMapper;
         this.userRepository = userRepository;
     }
 
-    public CartResponseDto createCart(CreateCartDto createCartDto){
-        User user = this.userRepository.findById(createCartDto.getUserId()).orElseThrow(() -> new NotFoundException(createCartDto.getUserId(), User.class.getSimpleName()));
-        Cart cart = this.modelMapper.map(createCartDto, Cart.class);
+    public Cart createCart(Long userId){
+        System.out.println(userId);
+        User user = this.userRepository.findById(userId).orElseThrow(() -> new NotFoundException(userId, User.class.getSimpleName()));
+        Cart cart = new Cart();
         cart.setTotalPrice(0L);
+        cart.setTotalQuantity(0);
         user.setCart(cart);
         cart.setUser(user);
-        Cart createdCart = this.cartRepository.save(cart);
-        return this.modelMapper.map(createdCart, CartResponseDto.class);
+        return cartRepository.save(cart);
     }
 
+    public CartResponseDto addToCart(RequestCartItemDto requestCartItemDto, Long userId){
+        Cart cart;
+        if(requestCartItemDto.getCartId() == null){
+            cart = createCart(userId);
+            requestCartItemDto.setCartId(cart.getCartId());
+        }else {
+            cartRepository.findById(requestCartItemDto.getCartId()).orElseThrow(()-> new NotFoundException(requestCartItemDto.getCartId(), Cart.class.getSimpleName()));
+        }
+        return cartItemService.createCartItem(requestCartItemDto);
+    }
     public List<CartResponseDto> getAllCart(){
         List<Cart> carts = cartRepository.findAll();
-        List<CartResponseDto> cartResponseDtos = carts.stream().map(cart -> modelMapper.map(cart, CartResponseDto.class)).collect(Collectors.toList());
-        return cartResponseDtos;
+        return carts.stream().map(cart -> modelMapper.map(cart, CartResponseDto.class)).collect(Collectors.toList());
     }
 
     public CartResponseDto getCartByID(long cartId) {
@@ -46,7 +60,7 @@ public class CartService {
     }
 
     public void deleteCart(Long cartId){
-        Cart existedCart = cartRepository.findById(cartId).orElseThrow(()-> new NotFoundException(cartId,Cart.class.getSimpleName()));
+        cartRepository.findById(cartId).orElseThrow(()-> new NotFoundException(cartId,Cart.class.getSimpleName()));
         cartRepository.deleteById(cartId);
     }
 
