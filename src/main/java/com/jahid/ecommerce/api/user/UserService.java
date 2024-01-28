@@ -31,7 +31,7 @@ public class UserService {
 
     public void login(UserDto userDto){
         User existedUser = this.userRepository.findByMobileNo(userDto.getMobileNo());
-        if(existedUser == null) throw new NotFoundException();
+        if(existedUser == null) throw new NotFoundException(userDto.getId(),User.class.getSimpleName());
         if(!Objects.equals(existedUser.getPassword(), userDto.getPassword())) throw new PasswordNotMatchException();
     }
 
