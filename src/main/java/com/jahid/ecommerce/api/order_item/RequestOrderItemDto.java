@@ -17,5 +17,4 @@ public class RequestOrderItemDto implements Serializable {
     private int itemQuantity;
     private Long productId;
     private Long orderId;
-    private Long cartItemId;
 }
