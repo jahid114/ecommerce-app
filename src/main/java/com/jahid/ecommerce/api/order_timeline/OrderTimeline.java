@@ -1,4 +1,4 @@
-package com.jahid.ecommerce.api.order_status;
+package com.jahid.ecommerce.api.order_timeline;
 
 import com.jahid.ecommerce.api.order.Order;
 import jakarta.persistence.*;
@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -14,29 +15,29 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "order_status")
-public class OrderStatus {
+@Table(name = "order_timeline")
+public class OrderTimeline {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "order_status_id", nullable = false)
-    private Long order_status_id;
+    @Column(name = "order_timeline_id", nullable = false)
+    private Long orderTimelineId;
 
     @Column(name = "order_place_datetime", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Date orderPlaceDateTime;
+    private LocalDateTime orderPlaceDateTime;
 
     @Column(name = "order_approve_datetime")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date orderApproveDateTime;
+    private LocalDateTime orderApproveDateTime;
 
     @Column(name = "ready_to_deliver_datetime")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date readyToDeliverDateTime;
+    private LocalDateTime readyToDeliverDateTime;
 
     @Column(name = "delivery_datetime")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date deliveryDateTime;
+    private LocalDateTime deliveryDateTime;
 
-    @OneToOne(mappedBy = "orderStatus")
+    @OneToOne(mappedBy = "orderTimeline")
     private Order order;
 }
