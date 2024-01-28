@@ -1,10 +1,12 @@
 package com.jahid.ecommerce.api.order;
 
+import com.jahid.ecommerce.api.utility.EnumConstants;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -15,12 +17,13 @@ import java.util.List;
 @Getter
 @Setter
 public class OrderResponseDto implements Serializable {
-    private Long order_id;
+    private Long orderId;
     private Long totalPrice;
     private int totalQuantity;
     private List<OrderItemDto> orderItems;
     private UserDto user;
-    private OrderStatusDto orderStatus;
+    private OrderTimeline orderTimeline;
+    private EnumConstants.OderStatus orderStatus;
 
     /**
      * DTO for {@link com.jahid.ecommerce.api.order_item.OrderItem}
@@ -58,16 +61,16 @@ public class OrderResponseDto implements Serializable {
     }
 
     /**
-     * DTO for {@link com.jahid.ecommerce.api.order_status.OrderStatus}
+     * DTO for {@link OrderTimeline}
      */
     @NoArgsConstructor
     @Setter
     @Getter
-    public static class OrderStatusDto implements Serializable {
-        private Long order_status_id;
-        private Date orderPlaceDateTime;
-        private Date orderApproveDateTime;
-        private Date readyToDeliverDateTime;
-        private Date deliveryDateTime;
+    public static class OrderTimeline implements Serializable {
+        private Long orderTimelineId;
+        private LocalDateTime orderPlaceDateTime;
+        private LocalDateTime orderApproveDateTime;
+        private LocalDateTime readyToDeliverDateTime;
+        private LocalDateTime deliveryDateTime;
     }
 }
