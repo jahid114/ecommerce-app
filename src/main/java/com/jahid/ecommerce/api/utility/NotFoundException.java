@@ -1,7 +1,6 @@
 package com.jahid.ecommerce.api.utility;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter

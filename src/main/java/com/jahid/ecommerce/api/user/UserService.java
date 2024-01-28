@@ -6,7 +6,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -37,8 +36,7 @@ public class UserService {
 
     public List<UserResponseDto> getAllUser(){
         List<User> users = this.userRepository.findAll();
-        List<UserResponseDto> allUsers = users.stream().map(user -> modelMapper.map(user, UserResponseDto.class)).collect(Collectors.toList());
-        return allUsers;
+        return users.stream().map(user -> modelMapper.map(user, UserResponseDto.class)).collect(Collectors.toList());
     }
 
     public UserResponseDto getUserByID(Long id){
@@ -59,7 +57,7 @@ public class UserService {
     public void deleteUser(Long id){
         User existedUser = this.userRepository.findById(id)
                 .orElseThrow(()->new NotFoundException(id,User.class.getSimpleName()));
-        this.userRepository.deleteById(id);
+        this.userRepository.deleteById(existedUser.getUserId());
     }
 }
 
