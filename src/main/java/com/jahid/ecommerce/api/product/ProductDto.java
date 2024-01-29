@@ -19,6 +19,9 @@ public class ProductDto implements Serializable {
     private int inStock;
     private String sku;
     private EnumConstants.Category productCategory;
+    private String productImageUrl;
+    private String productImagePath;
+
 
     @Override
     public String toString() {

@@ -1,17 +1,25 @@
 package com.jahid.ecommerce.api.product;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jahid.ecommerce.api.user.User;
 import com.jahid.ecommerce.api.utility.EnumConstants;
 import com.jahid.ecommerce.api.utility.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ProductService {
@@ -19,15 +27,40 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final ModelMapper modelMapper;
 
-    ProductService(@Autowired ProductRepository productRepository, @Autowired ModelMapper modelMapper){
+    private final String ROOT_PATH = "src/main/resources/static/product_images";
+    private final Path root = Paths.get( ROOT_PATH );
+
+    ProductService( @Autowired ProductRepository productRepository,
+                    @Autowired ModelMapper modelMapper ) throws IOException {
         this.productRepository = productRepository;
         this.modelMapper = modelMapper;
+        Files.createDirectories( root );
     }
 
-    public ProductDto addProduct(ProductDto productDto){
+    public ProductDto addProduct(MultipartFile file , String productInfo) throws IOException {
+        ProductDto productDto = new ObjectMapper().readValue(productInfo,ProductDto.class);
         Product product = this.modelMapper.map(productDto, Product.class);
+
+        Path uploadPath =   Paths.get(ROOT_PATH +"/"+ UUID.randomUUID()+ ".png");
+        Files.copy(file.getInputStream(),uploadPath);
+        String url = MvcUriComponentsBuilder.fromMethodName(ProductController.class,
+                "getProductImage", uploadPath.getFileName().toString()).
+                build().toUriString();
+        product.setProductImageUrl(uploadPath.getFileName().toString());
+        product.setProductImageUrl(url);
+
         if(product.getProductCategory() == null) product.setProductCategory(EnumConstants.Category.UNKNOWN);
         return this.modelMapper.map(this.productRepository.save(product),ProductDto.class);
+    }
+
+    public Resource getProductImage(String imageName) throws MalformedURLException {
+        Path file = root.resolve(imageName);
+        Resource resource = new UrlResource(file.toUri());
+        if (resource.exists() || resource.isReadable()) {
+            return resource;
+        } else {
+            throw new RuntimeException("Could not read the file!");
+        }
     }
 
     public List<ProductDto> getAllProduct(){
