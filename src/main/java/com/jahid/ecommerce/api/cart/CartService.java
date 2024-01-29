@@ -36,7 +36,7 @@ public class CartService {
         cart.setTotalQuantity(0);
         user.setCart(cart);
         cart.setUser(user);
-        return cartRepository.save(cart);
+        return cart;
     }
 
     public CartResponseDto addToCart(RequestCartItemDto requestCartItemDto, Long userId){
@@ -45,9 +45,11 @@ public class CartService {
             cart = createCart(userId);
             requestCartItemDto.setCartId(cart.getCartId());
         }else {
-            cartRepository.findById(requestCartItemDto.getCartId()).orElseThrow(()-> new NotFoundException(requestCartItemDto.getCartId(), Cart.class.getSimpleName()));
+            cart = cartRepository.findById(requestCartItemDto.getCartId())
+                    .orElseThrow(()-> new NotFoundException(requestCartItemDto.getCartId(),
+                            Cart.class.getSimpleName()));
         }
-        return cartItemService.createCartItem(requestCartItemDto);
+        return cartItemService.createCartItem(requestCartItemDto, cart);
     }
     public List<CartResponseDto> getAllCart(){
         List<Cart> carts = cartRepository.findAll();

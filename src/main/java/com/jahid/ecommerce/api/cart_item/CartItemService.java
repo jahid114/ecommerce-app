@@ -28,9 +28,8 @@ public class CartItemService {
         this.cartRepository = cartRepository;
     }
 
-    public CartResponseDto createCartItem(RequestCartItemDto requestCartItemDto) {
+    public CartResponseDto createCartItem(RequestCartItemDto requestCartItemDto, Cart cart) {
         Product product = productRepository.findById(requestCartItemDto.getProductId()).orElseThrow(()->new NotFoundException(requestCartItemDto.getProductId(),Product.class.getName()));
-        Cart cart = cartRepository.findById(requestCartItemDto.getCartId()).orElseThrow(()->new NotFoundException(requestCartItemDto.getCartId(),Cart.class.getSimpleName()));
         CartItem cartItem = this.modelMapper.map(requestCartItemDto, CartItem.class);
         cartItem.setUnitPrice(product.getPrice());
         cartItem.setTotalPrice(((long) product.getPrice() * cartItem.getItemQuantity()));
