@@ -31,9 +31,10 @@ public class OrderService {
         this.productRepository = productRepository;
     }
 
-    // Todo : create order is incomplete
-    public OrderResponseDto createOrder(OrderRequestDto orderRequestDto){
-        Cart cart = cartRepository.findById(orderRequestDto.getCartId()).orElseThrow(()-> new NotFoundException(orderRequestDto.getCartId(), Cart.class.getSimpleName()));
+    public OrderResponseDto placeOrder(OrderRequestDto orderRequestDto){
+        Cart cart = cartRepository.findById(orderRequestDto.getCartId())
+                .orElseThrow(()-> new NotFoundException(orderRequestDto.getCartId(),
+                        Cart.class.getSimpleName()));
 
         //create a orderTime
         OrderTimeline orderTimeline = new OrderTimeline();
@@ -81,63 +82,93 @@ public class OrderService {
 
         // create a new orderItem
         OrderItem orderItem = new OrderItem();
-        orderItem.setOrderItemId(null);
-        orderItem.setUnitPrice(product.getPrice());
-        orderItem.setTotalPrice(((long) product.getPrice() * requestOrderItemDto.getItemQuantity()));
-        orderItem.setProduct(product);
-        orderItem.setItemQuantity(requestOrderItemDto.getItemQuantity());
-        orderItem.setOrder(order);
+        orderItem.setOrderItemId( null );
+        orderItem.setUnitPrice( product.getPrice() );
+        orderItem.setTotalPrice( (long) product.getPrice()
+                * requestOrderItemDto.getItemQuantity() );
+        orderItem.setProduct( product );
+        orderItem.setItemQuantity( requestOrderItemDto.getItemQuantity() );
+        orderItem.setOrder( order );
 
         // update the order info
-        order.setTotalQuantity(order.getTotalQuantity() + orderItem.getItemQuantity());
-        order.setTotalPrice(order.getTotalPrice() + orderItem.getTotalPrice());
-        order.getOrderItems().add(orderItem);
-        return modelMapper.map(orderRepository.save(order), OrderResponseDto.class);
+        order.setTotalQuantity( order.getTotalQuantity() + orderItem.getItemQuantity() );
+        order.setTotalPrice( order.getTotalPrice() + orderItem.getTotalPrice() );
+        order.getOrderItems().add( orderItem );
+        return modelMapper.map( orderRepository.save( order ), OrderResponseDto.class );
     }
 
-    public OrderResponseDto getOrderById(Long orderId){
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(()->new NotFoundException(orderId,Order.class.getSimpleName()));
-        return modelMapper.map(order, OrderResponseDto.class);
+    public OrderResponseDto getOrderById( Long orderId ){
+        Order order = orderRepository.findById( orderId )
+                .orElseThrow( ()->new NotFoundException(orderId,
+                        Order.class.getSimpleName()) );
+        return modelMapper.map( order, OrderResponseDto.class );
     }
 
     public List<OrderResponseDto> getAllOrder(){
         List<Order> orders = orderRepository.findAll();
-        return orders.stream().map(order -> modelMapper.map(order, OrderResponseDto.class)).toList();
+        return orders.stream().map( order -> modelMapper.map(order,
+                OrderResponseDto.class) ).toList();
     }
 
-    public void deleteOrder(Long orderId){
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(()-> new NotFoundException(orderId, Order.class.getSimpleName()));
-        orderRepository.deleteById(orderId);
+    public void deleteOrder( Long orderId ){
+        Order order = orderRepository.findById( orderId )
+                .orElseThrow( ()-> new NotFoundException( orderId,
+                        Order.class.getSimpleName() ) );
+        orderRepository.deleteById( orderId );
     }
 
     // admin only
-    public OrderResponseDto approveOrder(Long orderId){
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(()-> new NotFoundException(orderId, Order.class.getSimpleName()));
-        order.setOrderStatus(EnumConstants.OderStatus.APPROVE);
+    public OrderResponseDto approveOrder( Long orderId ){
+        Order order = orderRepository.findById( orderId )
+                .orElseThrow( ()-> new NotFoundException( orderId,
+                        Order.class.getSimpleName()) );
+
+        List<OrderItem> orderItems = order.getOrderItems();
+
+        List<OrderItem> list = orderItems.stream().map(orderItem -> {
+            Product product = new Product();
+            product = orderItem.getProduct();
+            product.setInStock(product.getInStock() - orderItem.getItemQuantity());
+            productRepository.save(product);
+            return orderItem;
+        }).toList();
+
+        order.setOrderStatus( EnumConstants.OderStatus.APPROVE );
         order.getOrderTimeline().setOrderApproveDateTime(LocalDateTime.now());
         return modelMapper.map(orderRepository.save(order), OrderResponseDto.class);
     }
 
     public OrderResponseDto updateReadyToDeliver(Long orderId){
         Order order = orderRepository.findById(orderId)
-                .orElseThrow(()-> new NotFoundException(orderId, Order.class.getSimpleName()));
+                .orElseThrow(()-> new NotFoundException(orderId,
+                        Order.class.getSimpleName()));
         order.getOrderTimeline().setReadyToDeliverDateTime(LocalDateTime.now());
         return modelMapper.map(orderRepository.save(order), OrderResponseDto.class);
     }
 
     public OrderResponseDto cancelOrder(Long orderId){
         Order order = orderRepository.findById(orderId)
-                .orElseThrow(()-> new NotFoundException(orderId, Order.class.getSimpleName()));
+                .orElseThrow(()-> new NotFoundException(orderId,
+                        Order.class.getSimpleName()));
         order.setOrderStatus(EnumConstants.OderStatus.CANCELED);
+
+        List<OrderItem> orderItems = order.getOrderItems();
+
+        List<OrderItem> list = orderItems.stream().map(orderItem -> {
+            Product product = new Product();
+            product = orderItem.getProduct();
+            product.setInStock(product.getInStock() + orderItem.getItemQuantity());
+            productRepository.save(product);
+            return orderItem;
+        }).toList();
+
         return modelMapper.map(orderRepository.save(order), OrderResponseDto.class);
     }
 
     public OrderResponseDto updateDeliveryDateOfOrder(Long orderId){
         Order order = orderRepository.findById(orderId)
-                .orElseThrow(()-> new NotFoundException(orderId, Order.class.getSimpleName()));
+                .orElseThrow(()-> new NotFoundException(orderId,
+                        Order.class.getSimpleName()));
         order.setOrderStatus(EnumConstants.OderStatus.DELIVERED);
         order.getOrderTimeline().setDeliveryDateTime(LocalDateTime.now());
         return modelMapper.map(orderRepository.save(order), OrderResponseDto.class);
