@@ -18,4 +18,10 @@ public class OrderItemController {
         ResponseOrderItemDto responseDto = orderItemService.updateOrderItem(requestOrderItemDto);
         return ResponseEntity.ok(responseDto);
     }
+
+    @DeleteMapping("/{orderItemId}")
+    public ResponseEntity<Void> deleteOrderItem(@PathVariable String orderItemId){
+        orderItemService.deleteOrderItem(Long.parseLong(orderItemId));
+        return ResponseEntity.noContent().build();
+    }
 }
