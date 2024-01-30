@@ -1,6 +1,8 @@
 package com.jahid.ecommerce.api.product;
 
 import com.jahid.ecommerce.api.utility.EnumConstants;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.io.Serializable;
@@ -8,23 +10,17 @@ import java.io.Serializable;
 /**
  * DTO for {@link com.jahid.ecommerce.api.product.Product}
  */
-@Getter
-@Setter
 @NoArgsConstructor
-public class ProductDto implements Serializable {
-    private Long productId;
+@AllArgsConstructor
+@Data
+public class ProductRequest implements Serializable {
+    @NotBlank(message = "Product should have a name")
     private String productName;
     private String productDetails;
+
+    @Min(value = 0, message = "Price shouldn't be negetive")
     private int price;
     private int inStock;
     private String sku;
     private EnumConstants.Category productCategory;
-    private String productImageUrl;
-    private String productImagePath;
-
-
-    @Override
-    public String toString() {
-        return "Name: "+productName+", details: "+productDetails+", price: "+price+", in stock: " + inStock+ ", sku: "+sku+", category: "+productCategory;
-    }
 }
