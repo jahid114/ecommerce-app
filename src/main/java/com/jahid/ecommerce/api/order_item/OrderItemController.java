@@ -1,21 +1,21 @@
 package com.jahid.ecommerce.api.order_item;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/orderItems")
+@RequestMapping( "/orderItems" )
+@RequiredArgsConstructor( onConstructor_ = @Autowired)
 public class OrderItemController {
 
     private final OrderItemService orderItemService;
 
-    public OrderItemController(OrderItemService orderItemService) {
-        this.orderItemService = orderItemService;
-    }
-
     @PatchMapping
     public ResponseEntity<ResponseOrderItemDto> updateOrderItem(@RequestBody RequestOrderItemDto requestOrderItemDto) {
-        ResponseOrderItemDto responseDto = orderItemService.updateOrderItem(requestOrderItemDto);
+        ResponseOrderItemDto responseDto = orderItemService
+                .updateOrderItem(requestOrderItemDto);
         return ResponseEntity.ok(responseDto);
     }
 

@@ -2,7 +2,7 @@ package com.jahid.ecommerce.api.cart_item;
 
 import com.jahid.ecommerce.api.cart.Cart;
 import com.jahid.ecommerce.api.cart.CartRepository;
-import com.jahid.ecommerce.api.cart.CartResponseDto;
+import com.jahid.ecommerce.api.cart.CartResponse;
 import com.jahid.ecommerce.api.product.Product;
 import com.jahid.ecommerce.api.product.ProductRepository;
 import com.jahid.ecommerce.api.utility.NotFoundException;
@@ -28,7 +28,7 @@ public class CartItemService {
         this.cartRepository = cartRepository;
     }
 
-    public CartResponseDto createCartItem(RequestCartItemDto requestCartItemDto, Cart cart) {
+    public CartResponse createCartItem(RequestCartItemDto requestCartItemDto, Cart cart) {
         Product product = productRepository.findById(requestCartItemDto.getProductId()).orElseThrow(()->new NotFoundException(requestCartItemDto.getProductId(),Product.class.getName()));
         CartItem cartItem = this.modelMapper.map(requestCartItemDto, CartItem.class);
         cartItem.setUnitPrice(product.getPrice());
@@ -44,7 +44,7 @@ public class CartItemService {
         }
         cart.setTotalQuantity(cart.getTotalQuantity()+cartItem.getItemQuantity());
         cart.setTotalPrice(cart.getTotalPrice()+cartItem.getTotalPrice());
-        return modelMapper.map(cartRepository.save(cart), CartResponseDto.class);
+        return modelMapper.map(cartRepository.save(cart), CartResponse.class);
     }
     // Todo fix quantity bug
     public ResponseCartItemDto updateCartItem(Long Id,int quantity){

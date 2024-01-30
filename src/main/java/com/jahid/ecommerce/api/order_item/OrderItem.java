@@ -30,11 +30,11 @@ public class OrderItem {
     @Column(name = "item_quantity", nullable = false)
     private int itemQuantity;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "product_id", nullable = false)
     private Product product;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "order_id", referencedColumnName = "order_id")
     private Order order;
 }

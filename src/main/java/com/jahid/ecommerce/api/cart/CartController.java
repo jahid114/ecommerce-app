@@ -21,21 +21,21 @@ public class CartController {
     }
 
     @PostMapping("/addToCart")
-    public ResponseEntity<CartResponseDto> addToCart(@RequestBody AddToCartRequestDto addToCartRequestDto){
-        System.out.println(addToCartRequestDto.getUserId());
-        RequestCartItemDto requestCartItemDto = modelMapper.map(addToCartRequestDto, RequestCartItemDto.class);
-        CartResponseDto response = cartService.addToCart(requestCartItemDto,addToCartRequestDto.getUserId());
+    public ResponseEntity<CartResponse> addToCart(@RequestBody AddToCartRequest addToCartRequest){
+        System.out.println(addToCartRequest.getUserId());
+        RequestCartItemDto requestCartItemDto = modelMapper.map(addToCartRequest, RequestCartItemDto.class);
+        CartResponse response = cartService.addToCart(requestCartItemDto, addToCartRequest.getUserId());
         return ResponseEntity.ok(response);
     }
     @GetMapping
-    public ResponseEntity<List<CartResponseDto>> getAllCart(){
-        List<CartResponseDto> cartResponseDto = cartService.getAllCart();
-        return ResponseEntity.ok(cartResponseDto);
+    public ResponseEntity<List<CartResponse>> getAllCart(){
+        List<CartResponse> cartResponse = cartService.getAllCart();
+        return ResponseEntity.ok(cartResponse);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CartResponseDto> getCartById(@PathVariable String id){
-        CartResponseDto cart = cartService.getCartByID(Long.parseLong(id));
+    public ResponseEntity<CartResponse> getCartById(@PathVariable String id){
+        CartResponse cart = cartService.getCartByID(Long.parseLong(id));
         return ResponseEntity.ok(cart);
     }
 

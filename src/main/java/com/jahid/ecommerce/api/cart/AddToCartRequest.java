@@ -9,7 +9,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Getter
 @Setter
-public class AddToCartRequestDto implements Serializable {
+public class AddToCartRequest implements Serializable {
     private Long userId;
     private int itemQuantity;
     private Long cartId;

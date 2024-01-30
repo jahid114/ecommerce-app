@@ -36,10 +36,10 @@ public class ResponseCartItemDto implements Serializable {
     /**
      * DTO for {@link com.jahid.ecommerce.api.product.Product}
      */
-    @AllArgsConstructor
     @Getter
     @Setter
     @NoArgsConstructor
+    @AllArgsConstructor
     public static class ProductDto implements Serializable {
         private Long productId;
     }

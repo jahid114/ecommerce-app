@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 
 
 /**
@@ -16,7 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
-public class CartResponseDto implements Serializable {
+public class CartResponse implements Serializable {
     private Long cartId;
     private Long totalPrice;
     private int totalQuantity;
