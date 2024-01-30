@@ -1,5 +1,6 @@
 package com.jahid.ecommerce.api.product;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -14,43 +15,53 @@ import java.util.List;
 
 @RestController()
 @RequestMapping("/products")
+@RequiredArgsConstructor( onConstructor_ = @Autowired )
 public class ProductController {
     private final ProductService productService;
 
-    ProductController(@Autowired ProductService productService){
-        this.productService = productService;
-    }
-
     @PostMapping()
-    public ResponseEntity<ProductDto> addProduct(@RequestParam("file") MultipartFile file, @RequestParam("productInfo") String productInfo) throws IOException {
-        return new ResponseEntity<>(this.productService.addProduct(file,productInfo), HttpStatus.CREATED);
+    public ResponseEntity<ProductResponse> addProduct(
+            @RequestParam("file") MultipartFile file,
+            @RequestParam("productInfo") String productInfo
+    ) throws IOException {
+        return new ResponseEntity<>(
+                this.productService.addProduct(file,productInfo),
+                HttpStatus.CREATED
+        );
     }
 
-    // Todo Need to fix the getProductImage method
     @GetMapping("/file/{imageName:.+}")
-    public ResponseEntity<Resource> getProductImage(@PathVariable String imageName) throws MalformedURLException {
+    public ResponseEntity<Resource> getProductImage(
+            @PathVariable String imageName
+    ) throws MalformedURLException {
         Resource file = productService.getProductImage(imageName);
         return ResponseEntity.ok().
                 header(HttpHeaders.CONTENT_DISPOSITION,
-                        "attachment; filename=\"" + file.getFilename() + "\"").
-                body(file);
+                        "attachment; filename=\"" + file.getFilename() + "\"")
+                .body(file);
     }
 
     @GetMapping
-    public ResponseEntity<List<ProductDto>> getAllProduct(){
-        return ResponseEntity.ok(this.productService.getAllProduct());
+    public ResponseEntity<List<ProductResponse>> getAllProduct(
+            @RequestBody GetAllProductRequest getAllProductRequest
+    ){
+        return ResponseEntity.ok( this.productService.getAllProduct( getAllProductRequest ) );
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductDto> getProductById(@PathVariable String id){
-        ProductDto productDto = this.productService.getProductById(Long.parseLong(id));
-        return ResponseEntity.ok(productDto);
+    public ResponseEntity<ProductResponse> getProductById(@PathVariable String id){
+        ProductResponse productResponse = this.productService
+                .getProductById( Long.parseLong( id ) );
+        return ResponseEntity.ok( productResponse );
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<ProductDto> updateProduct(@PathVariable String id, @RequestBody ProductDto productDto){
-        ProductDto updatedProduct = this.productService.updateProduct(Long.parseLong(id),productDto);
-        return ResponseEntity.ok(updatedProduct);
+    public ResponseEntity<ProductResponse> updateProduct(
+            @PathVariable String id,
+            @RequestBody ProductRequest productRequest
+    ){
+        ProductResponse updatedProduct = this.productService.updateProduct( Long.parseLong( id ), productRequest );
+        return ResponseEntity.ok( updatedProduct );
     }
 
     @DeleteMapping("/{id}")
