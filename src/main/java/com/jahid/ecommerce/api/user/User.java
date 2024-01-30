@@ -17,7 +17,7 @@ import java.util.Set;
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", nullable = false)
     private Long userId;
 
@@ -36,7 +36,7 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "address")
+    @Column(name = "address", length = 2000)
     private String address;
 
     @Column(name = "role", columnDefinition = "VARCHAR(255) DEFAULT 'CUSTOMER'", nullable = false)
