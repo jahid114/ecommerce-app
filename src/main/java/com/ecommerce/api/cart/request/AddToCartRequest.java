@@ -1,4 +1,4 @@
-package com.ecommerce.api.cart;
+package com.ecommerce.api.cart.request;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

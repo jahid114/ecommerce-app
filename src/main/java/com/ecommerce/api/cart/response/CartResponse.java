@@ -1,6 +1,7 @@
-package com.ecommerce.api.cart;
+package com.ecommerce.api.cart.response;
 
 
+import com.ecommerce.api.cart.model.Cart;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

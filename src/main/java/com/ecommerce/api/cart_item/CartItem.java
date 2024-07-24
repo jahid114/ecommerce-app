@@ -1,6 +1,6 @@
 package com.ecommerce.api.cart_item;
 
-import com.ecommerce.api.cart.Cart;
+import com.ecommerce.api.cart.model.Cart;
 import com.ecommerce.api.product.Product;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

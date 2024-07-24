@@ -1,5 +1,6 @@
-package com.ecommerce.api.cart;
+package com.ecommerce.api.cart.request;
 
+import com.ecommerce.api.cart.model.Cart;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +13,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Getter
 @Setter
-public class CreateCartDto implements Serializable {
+public class CreateCartRequest implements Serializable {
     private Long userId;
 }

@@ -1,8 +1,8 @@
 package com.ecommerce.api.cart_item;
 
-import com.ecommerce.api.cart.Cart;
-import com.ecommerce.api.cart.CartRepository;
-import com.ecommerce.api.cart.CartResponse;
+import com.ecommerce.api.cart.model.Cart;
+import com.ecommerce.api.cart.service.CartRepository;
+import com.ecommerce.api.cart.response.CartResponse;
 import com.ecommerce.api.product.Product;
 import com.ecommerce.api.product.ProductRepository;
 import com.ecommerce.api.utility.NotFoundException;
