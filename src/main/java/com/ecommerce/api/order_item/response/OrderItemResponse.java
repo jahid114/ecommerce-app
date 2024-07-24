@@ -1,6 +1,7 @@
-package com.ecommerce.api.order_item;
+package com.ecommerce.api.order_item.response;
 
 import com.ecommerce.api.order.model.Order;
+import com.ecommerce.api.order_item.model.OrderItem;
 import com.ecommerce.api.product.Product;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +15,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ResponseOrderItemDto implements Serializable {
+public class OrderItemResponse implements Serializable {
     private Long orderItemId;
     private int unitPrice;
     private Long totalPrice;

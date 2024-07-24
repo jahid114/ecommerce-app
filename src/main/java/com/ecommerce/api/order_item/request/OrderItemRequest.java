@@ -1,5 +1,6 @@
-package com.ecommerce.api.order_item;
+package com.ecommerce.api.order_item.request;
 
+import com.ecommerce.api.order_item.model.OrderItem;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,7 +13,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Getter
 @Setter
-public class RequestOrderItemDto implements Serializable {
+public class OrderItemRequest implements Serializable {
     private Long orderItemId;
     private int itemQuantity;
     private Long productId;

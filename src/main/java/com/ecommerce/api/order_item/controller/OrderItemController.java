@@ -1,5 +1,8 @@
-package com.ecommerce.api.order_item;
+package com.ecommerce.api.order_item.controller;
 
+import com.ecommerce.api.order_item.service.OrderItemService;
+import com.ecommerce.api.order_item.request.OrderItemRequest;
+import com.ecommerce.api.order_item.response.OrderItemResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +16,9 @@ public class OrderItemController {
     private final OrderItemService orderItemService;
 
     @PatchMapping
-    public ResponseEntity<ResponseOrderItemDto> updateOrderItem(@RequestBody RequestOrderItemDto requestOrderItemDto) {
-        ResponseOrderItemDto responseDto = orderItemService
-                .updateOrderItem(requestOrderItemDto);
+    public ResponseEntity<OrderItemResponse> updateOrderItem(@RequestBody OrderItemRequest orderItemRequest) {
+        OrderItemResponse responseDto = orderItemService
+                .updateOrderItem(orderItemRequest);
         return ResponseEntity.ok(responseDto);
     }
 

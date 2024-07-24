@@ -1,7 +1,10 @@
-package com.ecommerce.api.order_item;
+package com.ecommerce.api.order_item.service;
 
 import com.ecommerce.api.order.model.Order;
 import com.ecommerce.api.order.service.OrderRepository;
+import com.ecommerce.api.order_item.request.OrderItemRequest;
+import com.ecommerce.api.order_item.response.OrderItemResponse;
+import com.ecommerce.api.order_item.model.OrderItem;
 import com.ecommerce.api.utility.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -20,20 +23,20 @@ public class OrderItemService {
         this.orderRepository = orderRepository;
     }
 
-    public ResponseOrderItemDto updateOrderItem( RequestOrderItemDto requestOrderItemDto ){
-        OrderItem orderItem = orderItemRepository.findById(requestOrderItemDto.getOrderItemId())
-                .orElseThrow(()->new NotFoundException(requestOrderItemDto.getOrderId(),OrderItem.class.getSimpleName()));
+    public OrderItemResponse updateOrderItem(OrderItemRequest orderItemRequest){
+        OrderItem orderItem = orderItemRepository.findById(orderItemRequest.getOrderItemId())
+                .orElseThrow(()->new NotFoundException(orderItemRequest.getOrderId(),OrderItem.class.getSimpleName()));
 
         // update the order and orderItem
         Order order = orderItem.getOrder();
         order.setTotalQuantity(order.getTotalQuantity() - orderItem.getItemQuantity());
         order.setTotalPrice(order.getTotalPrice() - orderItem.getTotalPrice());
-        orderItem.setItemQuantity(requestOrderItemDto.getItemQuantity());
-        orderItem.setTotalPrice(((long) orderItem.getUnitPrice() * requestOrderItemDto.getItemQuantity()));
+        orderItem.setItemQuantity(orderItemRequest.getItemQuantity());
+        orderItem.setTotalPrice(((long) orderItem.getUnitPrice() * orderItemRequest.getItemQuantity()));
         order.setTotalQuantity(order.getTotalQuantity() + orderItem.getItemQuantity());
         order.setTotalPrice(order.getTotalPrice() + orderItem.getTotalPrice());
         orderRepository.save(order);
-        return modelMapper.map(orderItem,ResponseOrderItemDto.class);
+        return modelMapper.map(orderItem, OrderItemResponse.class);
     }
 
     public void deleteOrderItem( long orderItemId ) {

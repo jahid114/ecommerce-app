@@ -3,14 +3,14 @@ package com.ecommerce.api.order.service;
 import com.ecommerce.api.order.request.OrderRequest;
 import com.ecommerce.api.order.response.OrderResponse;
 import com.ecommerce.api.order.model.Order;
-import com.ecommerce.api.order_item.OrderItem;
+import com.ecommerce.api.order_item.model.OrderItem;
 import com.ecommerce.api.product.Product;
 import com.ecommerce.api.product.ProductRepository;
 import com.ecommerce.api.utility.EnumConstants;
 import com.ecommerce.api.utility.NotFoundException;
 import com.ecommerce.api.cart.model.Cart;
 import com.ecommerce.api.cart.service.CartRepository;
-import com.ecommerce.api.order_item.RequestOrderItemDto;
+import com.ecommerce.api.order_item.request.OrderItemRequest;
 import com.ecommerce.api.order_timeline.OrderTimeline;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -75,12 +75,12 @@ public class OrderService {
         return modelMapper.map(createdOrder, OrderResponse.class);
     }
 
-    public OrderResponse addToOrder(RequestOrderItemDto requestOrderItemDto){
-        Order order = orderRepository.findById(requestOrderItemDto.getOrderId())
-                .orElseThrow(()-> new NotFoundException(requestOrderItemDto.getOrderItemId(),
+    public OrderResponse addToOrder(OrderItemRequest orderItemRequest){
+        Order order = orderRepository.findById(orderItemRequest.getOrderId())
+                .orElseThrow(()-> new NotFoundException(orderItemRequest.getOrderItemId(),
                         Order.class.getSimpleName()));
-        Product product = productRepository.findById(requestOrderItemDto.getProductId())
-                .orElseThrow(()-> new NotFoundException(requestOrderItemDto.getProductId(),
+        Product product = productRepository.findById(orderItemRequest.getProductId())
+                .orElseThrow(()-> new NotFoundException(orderItemRequest.getProductId(),
                         Product.class.getSimpleName()));
 
         // create a new orderItem
@@ -88,9 +88,9 @@ public class OrderService {
         orderItem.setOrderItemId( null );
         orderItem.setUnitPrice( product.getPrice() );
         orderItem.setTotalPrice( (long) product.getPrice()
-                * requestOrderItemDto.getItemQuantity() );
+                * orderItemRequest.getItemQuantity() );
         orderItem.setProduct( product );
-        orderItem.setItemQuantity( requestOrderItemDto.getItemQuantity() );
+        orderItem.setItemQuantity( orderItemRequest.getItemQuantity() );
         orderItem.setOrder( order );
 
         // update the order info

@@ -1,7 +1,7 @@
 package com.ecommerce.api.order.response;
 
 import com.ecommerce.api.order.model.Order;
-import com.ecommerce.api.order_item.OrderItem;
+import com.ecommerce.api.order_item.model.OrderItem;
 import com.ecommerce.api.product.Product;
 import com.ecommerce.api.user.User;
 import com.ecommerce.api.utility.EnumConstants;

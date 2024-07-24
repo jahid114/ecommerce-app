@@ -1,7 +1,7 @@
 package com.ecommerce.api.product;
 
 import com.ecommerce.api.cart_item.model.CartItem;
-import com.ecommerce.api.order_item.OrderItem;
+import com.ecommerce.api.order_item.model.OrderItem;
 import com.ecommerce.api.utility.EnumConstants;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
