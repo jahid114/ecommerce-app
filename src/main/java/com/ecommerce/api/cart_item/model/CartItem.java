@@ -1,4 +1,4 @@
-package com.ecommerce.api.cart_item;
+package com.ecommerce.api.cart_item.model;
 
 import com.ecommerce.api.cart.model.Cart;
 import com.ecommerce.api.product.Product;

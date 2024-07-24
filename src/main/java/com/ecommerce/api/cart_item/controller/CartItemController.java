@@ -1,5 +1,8 @@
-package com.ecommerce.api.cart_item;
+package com.ecommerce.api.cart_item.controller;
 
+import com.ecommerce.api.cart_item.service.CartItemService;
+import com.ecommerce.api.cart_item.request.CartItemRequest;
+import com.ecommerce.api.cart_item.response.CartItemResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +18,8 @@ public class CartItemController {
 
 
     @PatchMapping("/{cartItemId}")
-    public ResponseEntity<ResponseCartItemDto> updateCartItem(@PathVariable String cartItemId, @RequestBody RequestCartItemDto requestCartItemDto){
-        ResponseCartItemDto response = cartItemService.updateCartItem(Long.parseLong(cartItemId),requestCartItemDto.getItemQuantity());
+    public ResponseEntity<CartItemResponse> updateCartItem(@PathVariable String cartItemId, @RequestBody CartItemRequest cartItemRequest){
+        CartItemResponse response = cartItemService.updateCartItem(Long.parseLong(cartItemId), cartItemRequest.getItemQuantity());
         return ResponseEntity.ok(response);
     }
 

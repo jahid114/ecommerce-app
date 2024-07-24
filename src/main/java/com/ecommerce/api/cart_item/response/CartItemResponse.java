@@ -1,6 +1,7 @@
-package com.ecommerce.api.cart_item;
+package com.ecommerce.api.cart_item.response;
 
 import com.ecommerce.api.cart.model.Cart;
+import com.ecommerce.api.cart_item.model.CartItem;
 import com.ecommerce.api.product.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,7 +17,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ResponseCartItemDto implements Serializable {
+public class CartItemResponse implements Serializable {
     private Long cartItemId;
     private int unitPrice;
     private Long totalPrice;

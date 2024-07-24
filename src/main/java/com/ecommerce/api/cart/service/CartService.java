@@ -2,9 +2,8 @@ package com.ecommerce.api.cart.service;
 
 import com.ecommerce.api.cart.model.Cart;
 import com.ecommerce.api.cart.response.CartResponse;
-import com.ecommerce.api.cart.service.CartRepository;
-import com.ecommerce.api.cart_item.CartItemService;
-import com.ecommerce.api.cart_item.RequestCartItemDto;
+import com.ecommerce.api.cart_item.service.CartItemService;
+import com.ecommerce.api.cart_item.request.CartItemRequest;
 import com.ecommerce.api.user.User;
 import com.ecommerce.api.user.UserRepository;
 import com.ecommerce.api.utility.NotFoundException;
@@ -39,18 +38,18 @@ public class CartService {
         return cart;
     }
 
-    public CartResponse addToCart(RequestCartItemDto requestCartItemDto, Long userId){
+    public CartResponse addToCart(CartItemRequest cartItemRequest, Long userId){
         Cart cart;
-        if(requestCartItemDto.getCartId() == null){
+        if(cartItemRequest.getCartId() == null){
             cart = createCart(userId);
-            requestCartItemDto.setCartId(cart.getCartId());
+            cartItemRequest.setCartId(cart.getCartId());
         }
         else {
-            cart = cartRepository.findById(requestCartItemDto.getCartId())
+            cart = cartRepository.findById(cartItemRequest.getCartId())
                     .orElseThrow(()-> new NotFoundException(
-                            requestCartItemDto.getCartId(), Cart.class.getSimpleName()));
+                            cartItemRequest.getCartId(), Cart.class.getSimpleName()));
         }
-        return cartItemService.createCartItem(requestCartItemDto, cart);
+        return cartItemService.createCartItem(cartItemRequest, cart);
     }
 
     public List<CartResponse> getAllCart(){

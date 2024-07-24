@@ -3,7 +3,7 @@ package com.ecommerce.api.cart.controller;
 import com.ecommerce.api.cart.request.AddToCartRequest;
 import com.ecommerce.api.cart.response.CartResponse;
 import com.ecommerce.api.cart.service.CartService;
-import com.ecommerce.api.cart_item.RequestCartItemDto;
+import com.ecommerce.api.cart_item.request.CartItemRequest;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +26,8 @@ public class CartController {
     @PostMapping("/addToCart")
     public ResponseEntity<CartResponse> addToCart(@RequestBody AddToCartRequest addToCartRequest){
         System.out.println(addToCartRequest.getUserId());
-        RequestCartItemDto requestCartItemDto = modelMapper.map(addToCartRequest, RequestCartItemDto.class);
-        CartResponse response = cartService.addToCart(requestCartItemDto, addToCartRequest.getUserId());
+        CartItemRequest cartItemRequest = modelMapper.map(addToCartRequest, CartItemRequest.class);
+        CartResponse response = cartService.addToCart(cartItemRequest, addToCartRequest.getUserId());
         return ResponseEntity.ok(response);
     }
     @GetMapping
