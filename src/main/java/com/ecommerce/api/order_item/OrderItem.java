@@ -1,6 +1,6 @@
 package com.ecommerce.api.order_item;
 
-import com.ecommerce.api.order.Order;
+import com.ecommerce.api.order.model.Order;
 import com.ecommerce.api.product.Product;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

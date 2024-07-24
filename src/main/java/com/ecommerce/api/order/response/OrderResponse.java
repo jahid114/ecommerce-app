@@ -1,5 +1,6 @@
-package com.ecommerce.api.order;
+package com.ecommerce.api.order.response;
 
+import com.ecommerce.api.order.model.Order;
 import com.ecommerce.api.order_item.OrderItem;
 import com.ecommerce.api.product.Product;
 import com.ecommerce.api.user.User;
@@ -18,7 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class OrderResponseDto implements Serializable {
+public class OrderResponse implements Serializable {
     private Long orderId;
     private Long totalPrice;
     private int totalQuantity;

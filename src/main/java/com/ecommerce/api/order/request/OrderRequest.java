@@ -1,4 +1,4 @@
-package com.ecommerce.api.order;
+package com.ecommerce.api.order.request;
 
 
 import lombok.Getter;
@@ -10,6 +10,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Getter
 @Setter
-public class OrderRequestDto implements Serializable {
+public class OrderRequest implements Serializable {
     private Long cartId;
 }

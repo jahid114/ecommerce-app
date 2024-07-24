@@ -1,6 +1,6 @@
 package com.ecommerce.api.order_timeline;
 
-import com.ecommerce.api.order.Order;
+import com.ecommerce.api.order.model.Order;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

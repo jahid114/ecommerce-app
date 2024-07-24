@@ -1,6 +1,6 @@
 package com.ecommerce.api.order_item;
 
-import com.ecommerce.api.order.Order;
+import com.ecommerce.api.order.model.Order;
 import com.ecommerce.api.product.Product;
 import lombok.AllArgsConstructor;
 import lombok.Data;

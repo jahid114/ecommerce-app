@@ -1,6 +1,6 @@
 package com.ecommerce.api.user;
 
-import com.ecommerce.api.order.Order;
+import com.ecommerce.api.order.model.Order;
 import com.ecommerce.api.utility.EnumConstants;
 import com.ecommerce.api.cart.model.Cart;
 import jakarta.persistence.*;

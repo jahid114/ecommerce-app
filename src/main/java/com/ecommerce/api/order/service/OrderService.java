@@ -1,5 +1,8 @@
-package com.ecommerce.api.order;
+package com.ecommerce.api.order.service;
 
+import com.ecommerce.api.order.request.OrderRequest;
+import com.ecommerce.api.order.response.OrderResponse;
+import com.ecommerce.api.order.model.Order;
 import com.ecommerce.api.order_item.OrderItem;
 import com.ecommerce.api.product.Product;
 import com.ecommerce.api.product.ProductRepository;
@@ -31,9 +34,9 @@ public class OrderService {
         this.productRepository = productRepository;
     }
 
-    public OrderResponseDto placeOrder(OrderRequestDto orderRequestDto){
-        Cart cart = cartRepository.findById(orderRequestDto.getCartId())
-                .orElseThrow(()-> new NotFoundException(orderRequestDto.getCartId(),
+    public OrderResponse placeOrder(OrderRequest orderRequest){
+        Cart cart = cartRepository.findById(orderRequest.getCartId())
+                .orElseThrow(()-> new NotFoundException(orderRequest.getCartId(),
                         Cart.class.getSimpleName()));
 
         //create a orderTime
@@ -69,10 +72,10 @@ public class OrderService {
         // delete the cart after order is placed
         cartRepository.deleteById(cart.getCartId());
 
-        return modelMapper.map(createdOrder, OrderResponseDto.class);
+        return modelMapper.map(createdOrder, OrderResponse.class);
     }
 
-    public OrderResponseDto addToOrder(RequestOrderItemDto requestOrderItemDto){
+    public OrderResponse addToOrder(RequestOrderItemDto requestOrderItemDto){
         Order order = orderRepository.findById(requestOrderItemDto.getOrderId())
                 .orElseThrow(()-> new NotFoundException(requestOrderItemDto.getOrderItemId(),
                         Order.class.getSimpleName()));
@@ -94,20 +97,20 @@ public class OrderService {
         order.setTotalQuantity( order.getTotalQuantity() + orderItem.getItemQuantity() );
         order.setTotalPrice( order.getTotalPrice() + orderItem.getTotalPrice() );
         order.getOrderItems().add( orderItem );
-        return modelMapper.map( orderRepository.save( order ), OrderResponseDto.class );
+        return modelMapper.map( orderRepository.save( order ), OrderResponse.class );
     }
 
-    public OrderResponseDto getOrderById( Long orderId ){
+    public OrderResponse getOrderById(Long orderId ){
         Order order = orderRepository.findById( orderId )
                 .orElseThrow( ()->new NotFoundException(orderId,
                         Order.class.getSimpleName()) );
-        return modelMapper.map( order, OrderResponseDto.class );
+        return modelMapper.map( order, OrderResponse.class );
     }
 
-    public List<OrderResponseDto> getAllOrder(){
+    public List<OrderResponse> getAllOrder(){
         List<Order> orders = orderRepository.findAll();
         return orders.stream().map( order -> modelMapper.map(order,
-                OrderResponseDto.class) ).toList();
+                OrderResponse.class) ).toList();
     }
 
     public void deleteOrder( Long orderId ){
@@ -118,7 +121,7 @@ public class OrderService {
     }
 
     // admin only
-    public OrderResponseDto approveOrder( Long orderId ){
+    public OrderResponse approveOrder(Long orderId ){
         Order order = orderRepository.findById( orderId )
                 .orElseThrow( ()-> new NotFoundException( orderId,
                         Order.class.getSimpleName()) );
@@ -135,18 +138,18 @@ public class OrderService {
 
         order.setOrderStatus( EnumConstants.OderStatus.APPROVE );
         order.getOrderTimeline().setOrderApproveDateTime(LocalDateTime.now());
-        return modelMapper.map(orderRepository.save(order), OrderResponseDto.class);
+        return modelMapper.map(orderRepository.save(order), OrderResponse.class);
     }
 
-    public OrderResponseDto updateReadyToDeliver(Long orderId){
+    public OrderResponse updateReadyToDeliver(Long orderId){
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(()-> new NotFoundException(orderId,
                         Order.class.getSimpleName()));
         order.getOrderTimeline().setReadyToDeliverDateTime(LocalDateTime.now());
-        return modelMapper.map(orderRepository.save(order), OrderResponseDto.class);
+        return modelMapper.map(orderRepository.save(order), OrderResponse.class);
     }
 
-    public OrderResponseDto cancelOrder(Long orderId){
+    public OrderResponse cancelOrder(Long orderId){
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(()-> new NotFoundException(orderId,
                         Order.class.getSimpleName()));
@@ -162,15 +165,15 @@ public class OrderService {
             return orderItem;
         }).toList();
 
-        return modelMapper.map(orderRepository.save(order), OrderResponseDto.class);
+        return modelMapper.map(orderRepository.save(order), OrderResponse.class);
     }
 
-    public OrderResponseDto updateDeliveryDateOfOrder(Long orderId){
+    public OrderResponse updateDeliveryDateOfOrder(Long orderId){
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(()-> new NotFoundException(orderId,
                         Order.class.getSimpleName()));
         order.setOrderStatus(EnumConstants.OderStatus.DELIVERED);
         order.getOrderTimeline().setDeliveryDateTime(LocalDateTime.now());
-        return modelMapper.map(orderRepository.save(order), OrderResponseDto.class);
+        return modelMapper.map(orderRepository.save(order), OrderResponse.class);
     }
 }
