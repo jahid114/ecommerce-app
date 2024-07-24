@@ -1,5 +1,6 @@
-package com.ecommerce.api.product;
+package com.ecommerce.api.product.request;
 
+import com.ecommerce.api.product.model.Product;
 import com.ecommerce.api.utility.EnumConstants;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

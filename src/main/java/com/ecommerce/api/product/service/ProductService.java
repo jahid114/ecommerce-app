@@ -1,9 +1,14 @@
-package com.ecommerce.api.product;
+package com.ecommerce.api.product.service;
 
+import com.ecommerce.api.product.controller.ProductController;
+import com.ecommerce.api.product.model.Product;
+import com.ecommerce.api.product.request.GetAllProductRequest;
+import com.ecommerce.api.product.request.ProductRequest;
+import com.ecommerce.api.product.response.ProductResponse;
 import com.ecommerce.api.utility.EnumConstants;
 import com.ecommerce.api.utility.NotFoundException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ecommerce.api.user.User;
+import com.ecommerce.api.user.model.User;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +39,7 @@ public class ProductService {
     private final Path root = Paths.get( ROOT_PATH );
 
 
-    public ProductResponse addProduct( MultipartFile file , String productInfo )
+    public ProductResponse addProduct(MultipartFile file , String productInfo )
             throws IOException {
         ProductRequest productRequest = new ObjectMapper()
                 .readValue( productInfo, ProductRequest.class );

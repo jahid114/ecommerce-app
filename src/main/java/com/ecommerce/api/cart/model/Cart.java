@@ -1,7 +1,7 @@
 package com.ecommerce.api.cart.model;
 
 import com.ecommerce.api.cart_item.model.CartItem;
-import com.ecommerce.api.user.User;
+import com.ecommerce.api.user.model.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

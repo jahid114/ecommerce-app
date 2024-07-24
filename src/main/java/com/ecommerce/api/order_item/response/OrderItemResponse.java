@@ -2,7 +2,7 @@ package com.ecommerce.api.order_item.response;
 
 import com.ecommerce.api.order.model.Order;
 import com.ecommerce.api.order_item.model.OrderItem;
-import com.ecommerce.api.product.Product;
+import com.ecommerce.api.product.model.Product;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

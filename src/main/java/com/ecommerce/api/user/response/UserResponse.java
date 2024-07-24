@@ -1,6 +1,7 @@
-package com.ecommerce.api.user;
+package com.ecommerce.api.user.response;
 
 import com.ecommerce.api.cart.model.Cart;
+import com.ecommerce.api.user.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Setter
 @Getter
-public class UserResponseDto implements Serializable {
+public class UserResponse implements Serializable {
     private Long userId;
     private String name;
     private String mobileNo;

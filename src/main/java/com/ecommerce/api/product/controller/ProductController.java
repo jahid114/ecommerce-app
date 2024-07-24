@@ -1,5 +1,9 @@
-package com.ecommerce.api.product;
+package com.ecommerce.api.product.controller;
 
+import com.ecommerce.api.product.request.GetAllProductRequest;
+import com.ecommerce.api.product.request.ProductRequest;
+import com.ecommerce.api.product.response.ProductResponse;
+import com.ecommerce.api.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;

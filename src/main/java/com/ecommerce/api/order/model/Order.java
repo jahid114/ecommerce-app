@@ -3,7 +3,7 @@ package com.ecommerce.api.order.model;
 import com.ecommerce.api.order_item.model.OrderItem;
 import com.ecommerce.api.utility.EnumConstants;
 import com.ecommerce.api.order_timeline.OrderTimeline;
-import com.ecommerce.api.user.User;
+import com.ecommerce.api.user.model.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

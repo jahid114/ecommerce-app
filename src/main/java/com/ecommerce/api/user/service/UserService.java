@@ -1,5 +1,9 @@
-package com.ecommerce.api.user;
+package com.ecommerce.api.user.service;
 
+import com.ecommerce.api.user.exeptions.PasswordNotMatchException;
+import com.ecommerce.api.user.response.UserResponse;
+import com.ecommerce.api.user.model.User;
+import com.ecommerce.api.user.request.UserRequest;
 import com.ecommerce.api.utility.EnumConstants;
 import com.ecommerce.api.utility.NotFoundException;
 import org.modelmapper.ModelMapper;
@@ -20,38 +24,38 @@ public class UserService {
         this.modelMapper = modelMapper;
     }
 
-    public UserResponseDto registerUser(UserDto userDto){
-        User user = this.modelMapper.map(userDto, User.class);
+    public UserResponse registerUser(UserRequest userRequest){
+        User user = this.modelMapper.map(userRequest, User.class);
         if(user.getUserRole() == null) user.setUserRole(EnumConstants.UserRole.CUSTOMER);
         if(!user.isActive()) user.setActive(true);
         User createdUser = this.userRepository.save(user);
-        return this.modelMapper.map(createdUser,UserResponseDto.class);
+        return this.modelMapper.map(createdUser, UserResponse.class);
     }
 
-    public void login(UserDto userDto){
-        User existedUser = this.userRepository.findByMobileNo(userDto.getMobileNo());
-        if(existedUser == null) throw new NotFoundException(userDto.getId(),User.class.getSimpleName());
-        if(!Objects.equals(existedUser.getPassword(), userDto.getPassword())) throw new PasswordNotMatchException();
+    public void login(UserRequest userRequest){
+        User existedUser = this.userRepository.findByMobileNo(userRequest.getMobileNo());
+        if(existedUser == null) throw new NotFoundException(userRequest.getId(),User.class.getSimpleName());
+        if(!Objects.equals(existedUser.getPassword(), userRequest.getPassword())) throw new PasswordNotMatchException();
     }
 
-    public List<UserResponseDto> getAllUser(){
+    public List<UserResponse> getAllUser(){
         List<User> users = this.userRepository.findAll();
-        return users.stream().map(user -> modelMapper.map(user, UserResponseDto.class)).collect(Collectors.toList());
+        return users.stream().map(user -> modelMapper.map(user, UserResponse.class)).collect(Collectors.toList());
     }
 
-    public UserResponseDto getUserByID(Long id){
+    public UserResponse getUserByID(Long id){
         User user = this.userRepository.findById(id).orElseThrow(() -> new NotFoundException(id, User.class.getSimpleName()));
-        return this.modelMapper.map(user, UserResponseDto.class);
+        return this.modelMapper.map(user, UserResponse.class);
     }
 
-    public UserResponseDto updateUserNameEmailAndAddress(Long id, UserDto userDto){
+    public UserResponse updateUserNameEmailAndAddress(Long id, UserRequest userRequest){
         User existedUser = this.userRepository.findById(id)
                 .orElseThrow(()->new NotFoundException(id, User.class.getSimpleName()));
-        if(userDto.getEmail() != null) existedUser.setEmail(userDto.getEmail());
-        if(userDto.getAddress() != null)existedUser.setAddress(userDto.getAddress());
-        if(userDto.getName() != null)existedUser.setName(userDto.getName());
+        if(userRequest.getEmail() != null) existedUser.setEmail(userRequest.getEmail());
+        if(userRequest.getAddress() != null)existedUser.setAddress(userRequest.getAddress());
+        if(userRequest.getName() != null)existedUser.setName(userRequest.getName());
         User updatedUser = this.userRepository.save(existedUser);
-        return this.modelMapper.map(updatedUser,UserResponseDto.class);
+        return this.modelMapper.map(updatedUser, UserResponse.class);
     }
 
     public void deleteUser(Long id){

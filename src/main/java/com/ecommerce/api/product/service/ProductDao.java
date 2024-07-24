@@ -1,5 +1,7 @@
-package com.ecommerce.api.product;
+package com.ecommerce.api.product.service;
 
+import com.ecommerce.api.product.model.Product;
+import com.ecommerce.api.product.request.GetAllProductRequest;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;

@@ -2,8 +2,8 @@ package com.ecommerce.api.order.response;
 
 import com.ecommerce.api.order.model.Order;
 import com.ecommerce.api.order_item.model.OrderItem;
-import com.ecommerce.api.product.Product;
-import com.ecommerce.api.user.User;
+import com.ecommerce.api.product.model.Product;
+import com.ecommerce.api.user.model.User;
 import com.ecommerce.api.utility.EnumConstants;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

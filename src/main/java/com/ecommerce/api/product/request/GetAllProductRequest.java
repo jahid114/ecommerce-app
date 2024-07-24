@@ -1,5 +1,6 @@
-package com.ecommerce.api.product;
+package com.ecommerce.api.product.request;
 
+import com.ecommerce.api.product.model.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

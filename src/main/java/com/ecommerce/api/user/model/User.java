@@ -1,4 +1,4 @@
-package com.ecommerce.api.user;
+package com.ecommerce.api.user.model;
 
 import com.ecommerce.api.order.model.Order;
 import com.ecommerce.api.utility.EnumConstants;

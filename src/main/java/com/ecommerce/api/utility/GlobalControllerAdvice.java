@@ -1,6 +1,6 @@
 package com.ecommerce.api.utility;
 
-import com.ecommerce.api.user.PasswordNotMatchException;
+import com.ecommerce.api.user.exeptions.PasswordNotMatchException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,5 +1,6 @@
-package com.ecommerce.api.user;
+package com.ecommerce.api.user.request;
 
+import com.ecommerce.api.user.model.User;
 import com.ecommerce.api.utility.EnumConstants;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -16,7 +17,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Getter
 @Setter
-public class UserDto implements Serializable {
+public class UserRequest implements Serializable {
     private Long id;
 
     @NotBlank(message = "User name shouldn't be blank")

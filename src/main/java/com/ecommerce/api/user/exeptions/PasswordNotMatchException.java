@@ -1,4 +1,4 @@
-package com.ecommerce.api.user;
+package com.ecommerce.api.user.exeptions;
 
 
 public class PasswordNotMatchException extends RuntimeException{
