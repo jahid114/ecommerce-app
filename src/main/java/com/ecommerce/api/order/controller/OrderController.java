@@ -3,7 +3,7 @@ package com.ecommerce.api.order.controller;
 import com.ecommerce.api.order.request.OrderRequest;
 import com.ecommerce.api.order.response.OrderResponse;
 import com.ecommerce.api.order.service.OrderService;
-import com.ecommerce.api.order_item.request.OrderItemRequest;
+import com.ecommerce.api.order.request.OrderItemRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

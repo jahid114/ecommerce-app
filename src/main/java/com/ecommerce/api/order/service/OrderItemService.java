@@ -1,10 +1,9 @@
-package com.ecommerce.api.order_item.service;
+package com.ecommerce.api.order.service;
 
 import com.ecommerce.api.order.model.Order;
-import com.ecommerce.api.order.service.OrderRepository;
-import com.ecommerce.api.order_item.request.OrderItemRequest;
-import com.ecommerce.api.order_item.response.OrderItemResponse;
-import com.ecommerce.api.order_item.model.OrderItem;
+import com.ecommerce.api.order.request.OrderItemRequest;
+import com.ecommerce.api.order.response.OrderItemResponse;
+import com.ecommerce.api.order.model.OrderItem;
 import com.ecommerce.api.utility.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;

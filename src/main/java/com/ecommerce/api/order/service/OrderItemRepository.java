@@ -1,6 +1,6 @@
-package com.ecommerce.api.order_item.service;
+package com.ecommerce.api.order.service;
 
-import com.ecommerce.api.order_item.model.OrderItem;
+import com.ecommerce.api.order.model.OrderItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

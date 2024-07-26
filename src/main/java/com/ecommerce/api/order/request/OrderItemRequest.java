@@ -1,6 +1,6 @@
-package com.ecommerce.api.order_item.request;
+package com.ecommerce.api.order.request;
 
-import com.ecommerce.api.order_item.model.OrderItem;
+import com.ecommerce.api.order.model.OrderItem;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

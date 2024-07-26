@@ -1,4 +1,4 @@
-package com.ecommerce.api.order_item.model;
+package com.ecommerce.api.order.model;
 
 import com.ecommerce.api.order.model.Order;
 import com.ecommerce.api.product.model.Product;

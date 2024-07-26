@@ -1,8 +1,8 @@
-package com.ecommerce.api.order_item.controller;
+package com.ecommerce.api.order.controller;
 
-import com.ecommerce.api.order_item.service.OrderItemService;
-import com.ecommerce.api.order_item.request.OrderItemRequest;
-import com.ecommerce.api.order_item.response.OrderItemResponse;
+import com.ecommerce.api.order.service.OrderItemService;
+import com.ecommerce.api.order.request.OrderItemRequest;
+import com.ecommerce.api.order.response.OrderItemResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

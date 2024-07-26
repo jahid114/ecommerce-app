@@ -1,7 +1,7 @@
-package com.ecommerce.api.order_item.response;
+package com.ecommerce.api.order.response;
 
 import com.ecommerce.api.order.model.Order;
-import com.ecommerce.api.order_item.model.OrderItem;
+import com.ecommerce.api.order.model.OrderItem;
 import com.ecommerce.api.product.model.Product;
 import lombok.AllArgsConstructor;
 import lombok.Data;
