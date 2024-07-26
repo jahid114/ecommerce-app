@@ -1,8 +1,8 @@
-package com.ecommerce.api.cart_item.controller;
+package com.ecommerce.api.cart.controller;
 
-import com.ecommerce.api.cart_item.service.CartItemService;
-import com.ecommerce.api.cart_item.request.CartItemRequest;
-import com.ecommerce.api.cart_item.response.CartItemResponse;
+import com.ecommerce.api.cart.service.CartItemService;
+import com.ecommerce.api.cart.request.CartItemRequest;
+import com.ecommerce.api.cart.response.CartItemResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

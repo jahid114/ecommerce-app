@@ -2,8 +2,7 @@ package com.ecommerce.api.cart.service;
 
 import com.ecommerce.api.cart.model.Cart;
 import com.ecommerce.api.cart.response.CartResponse;
-import com.ecommerce.api.cart_item.service.CartItemService;
-import com.ecommerce.api.cart_item.request.CartItemRequest;
+import com.ecommerce.api.cart.request.CartItemRequest;
 import com.ecommerce.api.user.model.User;
 import com.ecommerce.api.user.service.UserRepository;
 import com.ecommerce.api.utility.NotFoundException;

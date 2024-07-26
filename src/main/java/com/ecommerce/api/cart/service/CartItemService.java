@@ -1,11 +1,10 @@
-package com.ecommerce.api.cart_item.service;
+package com.ecommerce.api.cart.service;
 
 import com.ecommerce.api.cart.model.Cart;
-import com.ecommerce.api.cart.service.CartRepository;
 import com.ecommerce.api.cart.response.CartResponse;
-import com.ecommerce.api.cart_item.model.CartItem;
-import com.ecommerce.api.cart_item.request.CartItemRequest;
-import com.ecommerce.api.cart_item.response.CartItemResponse;
+import com.ecommerce.api.cart.model.CartItem;
+import com.ecommerce.api.cart.request.CartItemRequest;
+import com.ecommerce.api.cart.response.CartItemResponse;
 import com.ecommerce.api.product.model.Product;
 import com.ecommerce.api.product.service.ProductRepository;
 import com.ecommerce.api.utility.NotFoundException;

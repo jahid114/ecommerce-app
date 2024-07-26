@@ -1,6 +1,6 @@
-package com.ecommerce.api.cart_item.request;
+package com.ecommerce.api.cart.request;
 
-import com.ecommerce.api.cart_item.model.CartItem;
+import com.ecommerce.api.cart.model.CartItem;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
