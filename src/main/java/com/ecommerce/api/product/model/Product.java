@@ -4,16 +4,12 @@ import com.ecommerce.api.cart.model.CartItem;
 import com.ecommerce.api.order.model.OrderItem;
 import com.ecommerce.api.utility.EnumConstants;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -21,8 +17,8 @@ import java.util.List;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "product_id", nullable = false)
-    private Long productId;
+    @Column(name = "id")
+    private Long id;
 
     @Column(name = "product_name", nullable = false, unique = true)
     private String productName;
@@ -38,10 +34,10 @@ public class Product {
     private String productImagePath;
 
     @Column(name = "price",nullable = false)
-    private int price;
+    private Integer price;
 
     @Column(name = "in_stock",nullable = false)
-    private int inStock;
+    private Integer inStock;
 
     @Column(name = "sku", nullable = false)
     private String sku;

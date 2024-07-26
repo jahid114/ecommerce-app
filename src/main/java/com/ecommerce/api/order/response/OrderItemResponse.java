@@ -30,7 +30,7 @@ public class OrderItemResponse implements Serializable {
     @Data
     @NoArgsConstructor
     public static class ProductDto implements Serializable {
-        private Long productId;
+        private Long id;
     }
 
     /**

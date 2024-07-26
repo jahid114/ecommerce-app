@@ -44,6 +44,6 @@ public class CartItemResponse implements Serializable {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class ProductDto implements Serializable {
-        private Long productId;
+        private Long id;
     }
 }

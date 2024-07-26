@@ -1,21 +1,18 @@
 package com.ecommerce.api.product.request;
 
-import com.ecommerce.api.product.model.Product;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
-/**
- * DTO for {@link Product}
- */
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-public class GetAllProductRequest implements Serializable {
-    private String productName;
-    private int lowPrice;
-    private int highPrice;
+@Data
+public class GetAllProductRequest{
+    private Integer lowPrice;
+    private Integer highPrice;
     private String sku;
+    private String productName;
 }

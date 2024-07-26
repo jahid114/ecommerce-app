@@ -19,11 +19,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductDao {
 
-    private final EntityManager em;
+    private final EntityManager entityManager;
     private final ProductRepository productRepository;
 
     public List<Product> findAllByCriteria(GetAllProductRequest request) {
-        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Product> criteriaQuery = criteriaBuilder.createQuery(Product.class);
         Root<Product> root = criteriaQuery.from(Product.class);
 
@@ -56,7 +56,7 @@ public class ProductDao {
                     criteriaBuilder.and(predicates.toArray(predicates.toArray(new Predicate[0])))
             );
         }
-        TypedQuery<Product> query = em.createQuery(criteriaQuery);
+        TypedQuery<Product> query = entityManager.createQuery(criteriaQuery);
         return query.getResultList();
     }
 

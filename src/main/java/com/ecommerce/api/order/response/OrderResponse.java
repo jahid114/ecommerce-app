@@ -48,7 +48,7 @@ public class OrderResponse implements Serializable {
         @Getter
         @Setter
         public static class ProductDto implements Serializable {
-            private Long productId;
+            private Long id;
         }
     }
 
