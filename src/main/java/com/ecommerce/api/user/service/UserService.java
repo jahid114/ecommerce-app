@@ -61,7 +61,7 @@ public class UserService {
     public void deleteUser(Long id){
         User existedUser = this.userRepository.findById(id)
                 .orElseThrow(()->new NotFoundException(id,User.class.getSimpleName()));
-        this.userRepository.deleteById(existedUser.getUserId());
+        this.userRepository.deleteById(existedUser.getId());
     }
 }
 

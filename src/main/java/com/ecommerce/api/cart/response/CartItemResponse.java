@@ -1,49 +1,16 @@
 package com.ecommerce.api.cart.response;
 
-import com.ecommerce.api.cart.model.Cart;
-import com.ecommerce.api.cart.model.CartItem;
-import com.ecommerce.api.product.model.Product;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.ecommerce.api.product.response.ProductResponse;
+import lombok.*;
 
-import java.io.Serializable;
 
-/**
- * DTO for {@link CartItem}
- */
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-public class CartItemResponse implements Serializable {
-    private Long cartItemId;
-    private int unitPrice;
+@Data
+public class CartItemResponse {
+    private Long id;
     private Long totalPrice;
-    private int itemQuantity;
-    private CartDto cart;
-    private ProductDto product;
-
-    /**
-     * DTO for {@link Cart}
-     */
-    @AllArgsConstructor
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    public static class CartDto implements Serializable {
-        private Long cartId;
-    }
-
-    /**
-     * DTO for {@link Product}
-     */
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class ProductDto implements Serializable {
-        private Long id;
-    }
+    private Integer unitPrice;
+    private Integer itemQuantity;
+    private ProductResponse product;
 }

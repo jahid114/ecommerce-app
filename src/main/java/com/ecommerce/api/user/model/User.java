@@ -9,8 +9,7 @@ import lombok.*;
 import java.util.Set;
 
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -18,8 +17,8 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id", nullable = false)
-    private Long userId;
+    @Column(name = "id", nullable = false)
+    private Long id;
 
     @Column(name = "user_name", nullable = false)
     private String name;
@@ -31,7 +30,7 @@ public class User {
     private String password;
 
     @Column(name = "is_active", nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
-    private boolean isActive = true;
+    private Boolean isActive = true;
 
     @Column(name = "email")
     private String email;

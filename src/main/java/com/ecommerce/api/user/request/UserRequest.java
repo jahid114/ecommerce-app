@@ -1,24 +1,14 @@
 package com.ecommerce.api.user.request;
 
-import com.ecommerce.api.user.model.User;
 import com.ecommerce.api.utility.EnumConstants;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
-import java.io.Serializable;
-
-/**
- * DTO for {@link User}
- */
-
-
 @NoArgsConstructor
-@Getter
-@Setter
-public class UserRequest implements Serializable {
-    private Long id;
+@Data
+public class UserRequest{
 
     @NotBlank(message = "User name shouldn't be blank")
     private String name;
@@ -33,7 +23,7 @@ public class UserRequest implements Serializable {
     @Email(message = "User should have a valid email")
     private String email;
 
-    private boolean isActive;
     private String address;
+    private Boolean isActive;
     private EnumConstants.UserRole userRole;
 }

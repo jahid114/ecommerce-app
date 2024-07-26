@@ -59,7 +59,7 @@ public class OrderResponse implements Serializable {
     @Getter
     @Setter
     public static class UserDto implements Serializable {
-        private Long userId;
+        private Long id;
         private String name;
     }
 
