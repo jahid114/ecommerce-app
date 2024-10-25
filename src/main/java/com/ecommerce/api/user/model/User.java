@@ -42,9 +42,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     private EnumConstants.UserRole userRole = EnumConstants.UserRole.CUSTOMER;
 
-    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
-    private Cart cart;
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Order> orderSet;
 }

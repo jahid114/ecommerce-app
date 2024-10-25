@@ -3,7 +3,7 @@ package com.ecommerce.api.utility;
 public class EnumConstants {
     public enum UserRole{
         CUSTOMER,
-        ADD
+        ADMIN
     }
 
     public enum Category{
