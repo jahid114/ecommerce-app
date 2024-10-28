@@ -1,12 +1,11 @@
 package com.ecommerce.api.user.request;
 
+import lombok.*;
+import com.ecommerce.api.user.UserRole;
 import com.ecommerce.api.annotation.ValidEmail;
-import com.ecommerce.api.utility.EnumConstants;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 @NoArgsConstructor
@@ -30,5 +29,5 @@ public class UserRequest{
 
     private String address;
     private Boolean isActive;
-    private EnumConstants.UserRole userRole;
+    private UserRole userRole;
 }

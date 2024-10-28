@@ -1,5 +1,6 @@
 package com.ecommerce.api.user.service;
 
+import com.ecommerce.api.user.UserRole;
 import com.ecommerce.api.user.exeptions.PasswordNotMatchException;
 import com.ecommerce.api.user.response.UserResponse;
 import com.ecommerce.api.user.model.User;
@@ -7,6 +8,7 @@ import com.ecommerce.api.user.request.UserRequest;
 import com.ecommerce.api.utility.EnumConstants;
 import com.ecommerce.api.utility.NotFoundException;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,16 +27,16 @@ public class UserService {
     }
 
     public UserResponse registerUser(UserRequest userRequest){
-        User user = this.modelMapper.map(userRequest, User.class);
-        if(user.getUserRole() == null) user.setUserRole(EnumConstants.UserRole.CUSTOMER);
-        if(!user.isActive()) user.setActive(true);
-        User createdUser = this.userRepository.save(user);
-        return this.modelMapper.map(createdUser, UserResponse.class);
+        User user = new User();
+        BeanUtils.copyProperties( userRequest, user );
+        User createdUser = userRepository.save(user);
+        UserResponse response = new UserResponse();
+        BeanUtils.copyProperties(createdUser, response);
+        return response;
     }
 
     public void login(UserRequest userRequest){
         User existedUser = this.userRepository.findByMobileNo(userRequest.getMobileNo());
-        if(existedUser == null) throw new NotFoundException(userRequest.getId(),User.class.getSimpleName());
         if(!Objects.equals(existedUser.getPassword(), userRequest.getPassword())) throw new PasswordNotMatchException();
     }
 

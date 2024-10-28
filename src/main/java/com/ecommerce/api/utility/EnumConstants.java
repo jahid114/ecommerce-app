@@ -1,10 +1,6 @@
 package com.ecommerce.api.utility;
 
 public class EnumConstants {
-    public enum UserRole{
-        CUSTOMER,
-        ADMIN
-    }
 
     public enum Category{
         UNKNOWN,
